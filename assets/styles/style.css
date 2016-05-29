@@ -1,0 +1,208 @@
+/* General rules */
+
+.self.right.floated {
+    float: right;
+}
+
+.self.left.floated {
+    float: left !important;
+}
+
+.self[class*="left aligned"] {
+    text-align: left !important;
+}
+
+.self[class*="center aligned"] {
+    text-align: center !important;
+}
+
+.self[class*="right aligned"] {
+    text-align: right !important;
+}
+
+.self.clearing {
+    clear: both;
+}
+
+span.red, a.red, a.red i {
+    color: #d01919 !important;
+}
+
+a.red:hover {
+    color: #d01919 !important;
+    text-decoration: underline;
+}
+
+a.red:hover i {
+    text-decoration: none;
+}
+
+.ui.attached.segment.compact {
+    padding: 7px 15px;
+}
+
+.ui.comments.fluid {
+    max-width: 100%;
+}
+
+.ui.extra.tiny.image {
+    width: 50px !important;
+    margin-top: 0 !important;
+}
+
+.ui.extra.tiny.image img {
+    margin: 0;
+}
+
+.ui.x-small.modal {
+    width: 650px;
+    margin: 0 0 0 -325px;
+}
+
+.ui.xx-small.modal {
+    width: 550px;
+    margin: 0 0 0 -275px;
+}
+
+.ui.xxx-small.modal {
+    width: 450px;
+    margin: 0 0 0 -225px;
+}
+
+
+/* Pages rules */
+
+#menu {
+    margin-bottom: 0;
+}
+
+#menu #searcher {
+    width: 400px;
+}
+
+#menu > .right.menu > a#user-button > img {
+    margin-left: 5px;
+}
+
+#landing-page {
+    min-height: 400px;
+    background-color: #565A5C;
+}
+
+#landing-page .text.container {
+    margin: 90px 0 0 0;
+    font-size: 20px;
+}
+
+#landing-page .header {
+    color: white;
+}
+
+#smaller-menu {
+    background-color: #565A5C;
+}
+
+#smaller-menu .ui.menu {
+    margin: 0;
+    height: 40px;
+}
+
+#smaller-menu .ui.secondary.pointing.menu .active.item {
+    border-bottom-width: 3px;
+    border-bottom-color: rgba(255,255,255,.7);
+}
+
+#smaller-menu .ui.secondary.inverted.pointing.menu {
+    border-left-width: 0;
+    border-right-width: 0;
+}
+
+#site-content {
+    min-height: 700px;
+    background-color: #F5F5F5;
+}
+
+#site-content .segment h4:first-child {
+    margin-top: 15px;
+}
+
+#site-content .segment > div .row {
+    margin-top: 20px;
+}
+
+#site-content #dashboard-container #user-posts div.ui.segments:first-child textarea {
+    border: 0;
+}
+
+#site-content #dashboard-container #user-posts div.ui.segments .comments form.form {
+    margin-top: 15px;
+}
+
+#site-content #messages-container #shortened-messages div.date {
+    font-size: 11px;
+    color: rgba(0, 0, 0, 0.6);
+}
+
+#site-content #messages-container #shortened-messages .items > .item {
+    padding: 5px 3px 5px 5px !important;
+}
+
+#site-content #messages-container #shortened-messages .items > .item > .content {
+    padding-left: 10px;
+}
+
+#site-content #messages-container #shortened-messages .items > .item > .content > .meta {
+    font-size: 13px;
+}
+
+#site-content #messages-container #shortened-messages .items > .item.active, #site-content #messages-container #shortened-messages .items .item:hover {
+    background-color: rgb(245, 245, 245);
+}
+
+#site-content #messages-container #shortened-messages .items > .item:hover .content .header {
+    color: inherit;
+}
+
+#site-content #messages-container #conversation #conversation-header h3 {
+    margin-bottom: 8px;
+}
+
+#site-content #groups-container #group-info .ui.clearing.divider {
+    margin-bottom: 5px;
+}
+
+#site-content #groups-container #group-info h5.ui.dividing.header {
+    margin-bottom: 5px;
+    margin-top: 10px;
+}
+
+#footer {
+    background-color: #565A5C;
+    padding: 35px;
+}
+
+#footer, #footer a, #footer .header {
+    color: white;
+}
+
+#footer a:hover {
+    color: rgba(255,255,255,.5)
+}
+
+#log-in-modal .content #log-in-facebook {
+    margin-bottom: 15px;
+}
+
+#log-in-modal form div:last-child > span {
+    margin-top: 7px;
+    font-size: 17px;
+}
+
+#sign-up-modal .content #sign-up-facebook {
+    margin-bottom: 15px;
+}
+
+#sign-up-modal .content div:last-child > span {
+    margin-top: 7px;
+    font-size: 17px;
+}

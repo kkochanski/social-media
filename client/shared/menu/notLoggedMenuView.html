@@ -1,0 +1,150 @@
+<a id="sign-up-button" class="ui item" ng-click="vm.openSignUpModal()">Sign Up</a>
+<a id="log-in-button" class="ui item" ng-click="vm.openLogInModal()">Log In</a>
+
+<div id="log-in-modal" class="ui modal xx-small">
+    <div class="content">
+        <button id="log-in-facebook" class="massive labeled icon facebook fluid ui button">
+            <i class="facebook icon"></i>
+            Log in with Facebook
+        </button>
+
+        <button id="log-in-google" class="massive labeled icon basic fluid ui button">
+            <i class="google plus icon"></i>
+            Log in with Google
+        </button>
+        <div class="ui horizontal divider">
+            Or
+        </div>
+        <form class="ui form">
+            <div class="field">
+                <div class="ui big icon input">
+                    <input type="email" name="email" placeholder="E-mail">
+                    <i class="at icon"></i>
+                </div>
+            </div>
+            <div class="field">
+                <div class="ui big icon input">
+                    <input type="password" name="password" placeholder="Password">
+                    <i class="unlock icon"></i>
+                </div>
+            </div>
+            <div class="field">
+                <div class="ui checkbox">
+                    <input type="checkbox" tabindex="0" class="hidden">
+                    <label>Remember me</label>
+                </div>
+                <a href="#" class="red self right floated">Forgot password?</a>
+            </div>
+            <div class="ui clearing fitted hidden divider"></div>
+            <button class="ui red fluid huge button" type="submit">Log In</button>
+            <div class="ui divider"></div>
+            <div>
+                            <span class="self left floated">
+                                Don't have an account?
+                            </span>
+                <button ng-click="vm.openSignUpModalFromLogInModal()" class="self right floated ui red basic button">Sign Up</button>
+                <div class="ui clearing fitted hidden divider"></div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="sign-up-modal" class="ui modal xx-small">
+    <div class="content">
+
+        <div id="sign-up-email-container" ng-show="vm.showSignUpForm === true">
+            <p class="self center aligned">
+                Sign up with <a href="#" class="red">Facebook</a> or <a href="#" class="red">Google</a>
+            </p>
+
+            <div class="ui horizontal divider">
+                or
+            </div>
+
+            <form class="ui form">
+                <div class="field">
+                    <div class="ui right icon input">
+                        <input type="text" name="first_name" placeholder="First name">
+                        <i class="user icon"></i>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui right icon input">
+                        <input type="text" name="last_name" placeholder="Last name">
+                        <i class="user icon"></i>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui right icon input">
+                        <input type="email" name="email" placeholder="E-mail">
+                        <i class="at icon"></i>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui right icon input">
+                        <input type="password" name="password" placeholder="Password">
+                        <i class="unlock icon"></i>
+                    </div>
+                </div>
+                <div class="field">
+                    <label>Birthday</label>
+                    <div class="fields">
+                        <div class="three wide field">
+                            <select name="birthday[day]">
+                                <option value="">Day</option>
+                            </select>
+                        </div>
+                        <div class="five wide field">
+                            <select name="birthday[month]">
+                                <option value="">Month</option>
+                            </select>
+                        </div>
+                        <div class="three wide field">
+                            <select name="birthday[year]">
+                                <option value="">Year</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui checkbox">
+                        <input type="checkbox" tabindex="0" class="hidden">
+                        <label>I agree to the Terms&amp;Conditions</label>
+                    </div>
+                </div>
+                <button class="ui red fluid huge button" type="submit">Sign up</button>
+            </form>
+        </div>
+
+        <div id="initial-sign-up" ng-show="vm.showSignUpForm === false">
+            <button id="sign-up-facebook" class="massive labeled icon facebook fluid ui button">
+                <i class="facebook icon"></i>
+                Sign up with Facebook
+            </button>
+
+            <button id="sign-up-google" class="massive labeled icon basic fluid ui button">
+                <i class="google plus icon"></i>
+                Sign up with Google
+            </button>
+
+            <div class="ui horizontal divider">
+                Or
+            </div>
+
+            <button id="sign-up-email" ng-click="vm.showSignUpForm = true" class="massive labeled icon red fluid ui button">
+                <i class="mail outline icon"></i>
+                Sign up with E-mail
+            </button>
+        </div>
+
+        <div class="ui divider"></div>
+
+        <div>
+            <span class="self left floated">
+                Already our member?
+            </span>
+            <button ng-click="vm.openLogInModalFromSignUpModal()" class="self right floated ui red basic button">Log In</button>
+            <div class="ui clearing fitted hidden divider"></div>
+        </div>
+    </div>
+</div>
