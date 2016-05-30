@@ -8,6 +8,18 @@ config(function($stateProvider, $urlRouterProvider) {
 
     $urlRouterProvider.otherwise('/error');
 
+    var loggedMenu = {
+        templateUrl: 'shared/menu/loggedMenuView.html',
+        controller: 'loggedMenuController',
+        controllerAs: 'vm'
+    };
+
+    var notLoggedMenu = {
+        templateUrl: 'shared/menu/notLoggedMenuView.html',
+        controller: 'notLoggedMenuController',
+        controllerAs: 'vm'
+    };
+
     $stateProvider
         .state('home', {
             url: '/',
@@ -18,11 +30,7 @@ config(function($stateProvider, $urlRouterProvider) {
                 preContent: {
                     templateUrl: 'components/home/preContentView.html'
                 },
-                menu: {
-                    templateUrl: 'shared/menu/notLoggedMenuView.html',
-                    controller: 'notLoggedMenuController',
-                    controllerAs: 'vm'
-                }
+                menu: notLoggedMenu
             }
         })
         .state('account', {
@@ -36,11 +44,7 @@ config(function($stateProvider, $urlRouterProvider) {
                 preContent: {
                     templateUrl: 'shared/secondary_menu/secondaryMenuView.html'
                 },
-                menu: {
-                    templateUrl: 'shared/menu/loggedMenuView.html',
-                    controller: 'loggedMenuController',
-                    controllerAs: 'vm'
-                }
+                menu: loggedMenu
             }
         })
         .state('dashboard', {
@@ -54,11 +58,7 @@ config(function($stateProvider, $urlRouterProvider) {
                 preContent: {
                     templateUrl: 'shared/secondary_menu/secondaryMenuView.html'
                 },
-                menu: {
-                    templateUrl: 'shared/menu/loggedMenuView.html',
-                    controller: 'loggedMenuController',
-                    controllerAs: 'vm'
-                }
+                menu: loggedMenu
             }
         })
         .state('friends', {
@@ -72,11 +72,7 @@ config(function($stateProvider, $urlRouterProvider) {
                 preContent: {
                     templateUrl: 'shared/secondary_menu/secondaryMenuView.html'
                 },
-                menu: {
-                    templateUrl: 'shared/menu/loggedMenuView.html',
-                    controller: 'loggedMenuController',
-                    controllerAs: 'vm'
-                }
+                menu: loggedMenu
             }
         })
         .state('groups', {
@@ -90,11 +86,7 @@ config(function($stateProvider, $urlRouterProvider) {
                 preContent: {
                     templateUrl: 'shared/secondary_menu/secondaryMenuView.html'
                 },
-                menu: {
-                    templateUrl: 'shared/menu/loggedMenuView.html',
-                    controller: 'loggedMenuController',
-                    controllerAs: 'vm'
-                }
+                menu: loggedMenu
             }
         })
         .state('messages', {
@@ -108,11 +100,7 @@ config(function($stateProvider, $urlRouterProvider) {
                 preContent: {
                     templateUrl: 'shared/secondary_menu/secondaryMenuView.html'
                 },
-                menu: {
-                    templateUrl: 'shared/menu/loggedMenuView.html',
-                    controller: 'loggedMenuController',
-                    controllerAs: 'vm'
-                }
+                menu: loggedMenu
             }
         })
         .state('notifications', {
@@ -126,11 +114,7 @@ config(function($stateProvider, $urlRouterProvider) {
                 preContent: {
                     templateUrl: 'shared/secondary_menu/secondaryMenuView.html'
                 },
-                menu: {
-                    templateUrl: 'shared/menu/loggedMenuView.html',
-                    controller: 'loggedMenuController',
-                    controllerAs: 'vm'
-                }
+                menu: loggedMenu
             }
         })
         .state('profile', {
@@ -144,11 +128,7 @@ config(function($stateProvider, $urlRouterProvider) {
                 preContent: {
                     templateUrl: 'shared/secondary_menu/secondaryMenuView.html'
                 },
-                menu: {
-                    templateUrl: 'shared/menu/loggedMenuView.html',
-                    controller: 'loggedMenuController',
-                    controllerAs: 'vm'
-                }
+                menu: loggedMenu
             }
         })
     ;
