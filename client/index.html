@@ -9,7 +9,7 @@
         <!-- Site Properties -->
         <title>Homepage - Semantic</title>
         <link rel="stylesheet" href="assets/styles/style.css">
-        <link rel="stylesheet" href="node_modules/semantic-ui-css/semantic.min.css">
+        <link rel="stylesheet" href="../node_modules/semantic-ui-css/semantic.min.css">
     </head>
     <body>
         <div id="menu" class="ui stackable large menu">
@@ -66,13 +66,15 @@
             </div>
         </div>
 
-        <script src="node_modules/jquery/dist/jquery.min.js"></script>
-        <script src="node_modules/semantic-ui-css/semantic.min.js"></script>
-        <script src="node_modules/angular/angular.min.js"></script>
-        <script src="node_modules/angular-ui-router/release/angular-ui-router.min.js"></script>
-        <script src="client/app.module.js"></script>
-        <script src="client/app.routes.js"></script>
-        <script src="client/shared/menu/notLoggedMenuController.js"></script>
+        <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+        <script src="../node_modules/semantic-ui-css/semantic.min.js"></script>
+        <script src="../node_modules/angular/angular.min.js"></script>
+        <script src="../node_modules/angular-ui-router/release/angular-ui-router.min.js"></script>
+        <script src="app.module.js"></script>
+        <script src="app.routes.js"></script>
+        <script src="shared/menu/notLoggedMenuController.js"></script>
+        <script src="shared/menu/loggedMenuView.js"></script>
+        <script src="components/dashboard/dashboardController.js"></script>
         <script type="text/javascript">
             $('.ui.checkbox').checkbox();
 

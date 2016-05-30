@@ -1,0 +1,216 @@
+<div id="dashboard-container" class="ui grid">
+    <div class="four wide column">
+        <div class="ui segment">
+            <img class="ui avatar image" src="http://semantic-ui.com/images/avatar/large/stevie.jpg">
+            <span>Krzysztof Kochański</span>
+            <div class="ui link selection list">
+                <a class="red item"><i class="edit icon"></i> Edit profile</a>
+            </div>
+        </div>
+        <div class="ui segments">
+            <div class="ui compact secondary top attached segment">
+                <h5>Groups</h5>
+            </div>
+            <div class="ui bottom attached segment">
+                <div class="ui selection link list">
+                    <div class="item">
+                        <div class="right floated content">
+                            <span class="ui tiny circular label">2</span> <!-- Jak odczytać ile użytkownik ma nie zobaczonych postów w grupie? Trzeba zapisywać każde wejście na grupe i porównywać ostatnią datę zalogowania z ostatnią datą wejścia, a potem porównywać daty dodania wpisów -->
+                        </div>
+                        <i class="users icon"></i>
+                        <div class="content">
+                            <a href="#">Awesome users</a>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <i class="add square icon"></i>
+                        <div class="content">
+                            <a href="#">Add group</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="user-posts" class="eight wide column">
+        <div class="ui segments">
+            <div class="ui secondary top compact attached segment">
+                <h5>What's new?</h5>
+            </div>
+            <div class="ui attached segment">
+                <div class="ui form">
+                    <div class="field">
+                        <textarea rows="2" placeholder="Share your minds..."></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="ui bottom compact attached segment">
+                <div class="ui link horizontal list">
+                    <div class="item">
+                        <a href="#"><i class="file image outline icon"></i></a>
+                    </div>
+                    <div class="item">
+                        <a href="#"><i class="film icon"></i></a>
+                    </div>
+                </div>
+                <div class="ui right floated labeled icon mini red button">
+                    <i class="send outline icon"></i> Save
+                </div>
+                <div class="self clearing"></div>
+            </div>
+        </div>
+        <div class="ui segments">
+            <div class="ui top attached segment">
+                <div class="ui feed">
+                    <div class="event">
+                        <div class="label">
+                            <img src="http://semantic-ui.com/images/avatar/small/elliot.jpg">
+                        </div>
+                        <div class="content">
+                            <div class="summary">
+                                <a>Elliot Fu </a>
+                                <div class="date">
+                                    posted 2 days ago
+                                </div>
+                            </div>
+                            <div class="extra text">
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor impedit ipsum laborum maiores tempore veritatis....
+                            </div>
+                            <div class="extra images">
+                                <a><img src="http://semantic-ui.com/images/wireframe/image.png"></a>
+                                <a><img src="http://semantic-ui.com/images/wireframe/image.png"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ui compact attached segment">
+                <div class="ui small link horizontal list">
+                    <div class="item">
+                        <a href="#"><i class="like icon"></i> Approve that!</a>
+                    </div>
+                    <div class="item">
+                        <a href="#"><i class="comment outline icon"></i> Comment</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ui segments">
+            <div class="ui top attached segment">
+                <div class="ui feed">
+                    <div class="event">
+                        <div class="label">
+                            <img src="http://semantic-ui.com/images/avatar/small/joe.jpg">
+                        </div>
+                        <div class="content">
+                            <div class="summary">
+                                <a>Joe Henderson</a>
+                                <div class="date">
+                                    posted 3 days ago
+                                </div>
+                            </div>
+                            <div class="extra text">
+                                Ours is a life of constant reruns. We're always circling back to where we'd we started, then starting all over again. Even if we don't run extra laps that day,
+                                we surely will come back for more of the same another day soon.
+                            </div>
+                            <div class="meta">
+                                <a class="like">
+                                    <i class="like icon"></i> 5 Approvals
+                                </a>
+                                <a class="favorite">
+                                    <i class="comments outline icon"></i> 5 Comments
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ui compact attached segment">
+                <div class="ui small link horizontal list">
+                    <div class="item">
+                        <a href="#"><i class="like icon"></i> Approve that!</a>
+                    </div>
+                    <div class="item">
+                        <a href="#"><i class="comment outline icon"></i> Comment</a>
+                    </div>
+                </div>
+            </div>
+            <div class="ui bottom attached segment">
+                <div class="ui minimal comments">
+                    <div class="comment">
+                        <a class="avatar">
+                            <img src="http://semantic-ui.com/images/avatar/small/matt.jpg">
+                        </a>
+                        <div class="content">
+                            <a class="author">Matt</a>
+                            <div class="metadata">
+                                <span class="date">Today at 5:42PM</span>
+                            </div>
+                            <div class="text">
+                                How artistic!
+                            </div>
+                        </div>
+                    </div>
+                    <div class="comment">
+                        <a class="avatar">
+                            <img src="http://semantic-ui.com/images/avatar/small/joe.jpg">
+                        </a>
+                        <div class="content">
+                            <a class="author">Joe Henderson</a>
+                            <div class="metadata">
+                                <span class="date">5 days ago</span>
+                            </div>
+                            <div class="text">
+                                Dude, this is awesome. Thanks so much
+                            </div>
+                        </div>
+                    </div>
+                    <form class="ui form">
+                        <div class="field">
+                            <textarea rows="2"></textarea>
+                        </div>
+                        <button class="ui mini red labeled icon button">
+                            <i class="plus icon"></i> Add Reply
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="four wide column">
+        <div class="ui segments">
+            <div class="ui compact secondary top attached segment">
+                <h5>Your latest actions</h5>
+            </div>
+            <div class="ui bottom attached segment">
+                <div class="ui small feed">
+                    <div class="event">
+                        <div class="label">
+                            <i class="pencil icon"></i>
+                        </div>
+                        <div class="content">
+                            <div class="date">Today</div>
+                            <div class="summary">
+                                You posted on your friend <a>Stevie Feliciano's</a> wall.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="event">
+                        <div class="label">
+                            <img src="http://semantic-ui.com/images/avatar/small/jenny.jpg">
+                        </div>
+                        <div class="content">
+                            <div class="date">
+                                3 days ago
+                            </div>
+                            <div class="summary">
+                                You added <a>Jenny Hess</a> to your <a>coworker</a> group.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
