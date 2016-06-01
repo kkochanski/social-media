@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "angular": "^1.5.5",
+    "angular-messages": "^1.5.6",
     "angular-ui-router": "^0.3.0",
     "confidence": "^3.0.0",
     "good": "^7.0.0",
@@ -23,6 +24,7 @@
     "hapi-sequelize-crud": "^2.0.9",
     "mysql": "^2.10.2",
     "semantic-ui-css": "^2.1.8",
-    "sequelize": "^3.23.1"
+    "sequelize": "^3.23.1",
+    "underscore": "^1.8.3"
   }
 }

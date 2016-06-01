@@ -69,6 +69,11 @@ a.red:hover i {
     margin: 0 0 0 -225px;
 }
 
+form div.field p.error-message {
+    margin: 6px 2px -4px;
+    color: #9f3a38;
+}
+
 
 /* Pages rules */
 

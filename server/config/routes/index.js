@@ -1,9 +1,9 @@
 module.exports = [
     {
-        path: "/index",
-        method: "GET",
+        path: '/',
+        method: 'GET',
         handler: require('../../controllers/index'),
-        config: { auth: false } // 
+        config: { auth: false }
         //  config: { auth: 'jwt', plugins: {'hapiAuthorization': {roles: ['EMPLOYEE']}} } // 
     }
 ];

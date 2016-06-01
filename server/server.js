@@ -13,6 +13,23 @@ server.connection({
     port: 8000
 });
 
+server.route({
+    method: 'GET',
+    path: '/ta',
+    handler: function (request, reply) {
+        reply('Hello, world!');
+    },
+    config: { auth: false }
+});
+
+server.route({
+    method: 'GET',
+    path: '/haha',
+    handler: function (request, reply) {
+        reply('Hello, world!');
+    },
+    config: { auth: false }
+});
 
 server.register(require('hapi-auth-jwt2'), function (err) {
 
@@ -41,20 +58,20 @@ server.register(require('hapi-auth-jwt2'), function (err) {
 
 server.register(
     [
-        {
-            register: require('hapi-sequelize'),
-            options: {
-                database: dbSecurityConfig.database,
-                user: dbSecurityConfig.user,
-                pass: dbSecurityConfig.password,
-                dialect: 'mysql',
-                port: 3306,
-                models: 'models/*.js',
-                sequelize: {
-                    define: configLoader.get('/db/config')
-                }
-            }
-        },
+        // {
+        //     register: require('hapi-sequelize'),
+        //     options: {
+        //         database: dbSecurityConfig.database,
+        //         user: dbSecurityConfig.user,
+        //         pass: dbSecurityConfig.password,
+        //         dialect: 'mysql',
+        //         port: 3306,
+        //         models: 'db/models/*.js',
+        //         sequelize: {
+        //             define: configLoader.get('/db/config')
+        //         }
+        //     }
+        // },
         {
             register: require('good'),
             options: {
@@ -75,7 +92,7 @@ server.register(
         {
             register: require('hapi-router'),
             options: {
-                routes: './config/routes/routes.js'
+                routes: 'index.js'
             }
         },
         {
@@ -88,6 +105,7 @@ server.register(
         } else {
             server.start(function () {
                 console.info('Server started at ' + server.info.uri);
+                // console.log(server.table()[0].table[0]);
             });
         }
     }
