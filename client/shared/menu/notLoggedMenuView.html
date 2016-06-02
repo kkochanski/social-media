@@ -15,18 +15,20 @@
         <div class="ui horizontal divider">
             Or
         </div>
-        <form class="ui form">
+        <form name="vm.loginForm" class="ui form" novalidate>
             <div class="field">
                 <div class="ui big icon input">
-                    <input type="email" name="email" placeholder="E-mail">
+                    <input type="email" name="email" ng-model="email" placeholder="E-mail" required>
                     <i class="at icon"></i>
                 </div>
+                <div form-error error="vm.loginForm.email.$error" statement="vm.loginForm.$submitted"></div>
             </div>
             <div class="field">
                 <div class="ui big icon input">
-                    <input type="password" name="password" placeholder="Password">
+                    <input type="password" name="password" ng-model="password" placeholder="Password" required>
                     <i class="unlock icon"></i>
                 </div>
+                <div form-error error="vm.loginForm.password.$error" statement="vm.loginForm.$submitted"></div>
             </div>
             <div class="field">
                 <div class="ui checkbox">
