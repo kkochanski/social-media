@@ -34,11 +34,6 @@ function notLoggedMenuController($scope) {
     
     function openSignUpModal() {
         angular.element('#sign-up-modal')
-            .modal({
-                onHidden : function() {
-                    vm.showSignUpForm = false;
-                }
-            })
             .modal('show')
         ;
     }
@@ -49,8 +44,6 @@ function notLoggedMenuController($scope) {
     }
     
     function submitSignUp() {
-        // console.log(vm.signUpForm);
-        // console.log(vm.signUpForm.$valid);
         return false;
     }
 }
