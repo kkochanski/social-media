@@ -13,24 +13,6 @@ server.connection({
     port: 8000
 });
 
-server.route({
-    method: 'GET',
-    path: '/ta',
-    handler: function (request, reply) {
-        reply('Hello, world!');
-    },
-    config: { auth: false }
-});
-
-server.route({
-    method: 'GET',
-    path: '/haha',
-    handler: function (request, reply) {
-        reply('Hello, world!');
-    },
-    config: { auth: false }
-});
-
 server.register(require('hapi-auth-jwt2'), function (err) {
 
     if(err){
@@ -44,10 +26,10 @@ server.register(require('hapi-auth-jwt2'), function (err) {
                 // var models = request.server.plugins['hapi-sequelize'].db.sequelize.models;
 
                 // if (0) {
-                //     return callback(null, false);
+                    return callback(null, false);
                 // }
                 // else {
-                    return callback(null, false, {role: 'EMPLOYEE'});
+                //     return callback(null, false, {role: 'EMPLOYEE'});
                 // }
             },
             verifyOptions: { algorithms: [ 'HS256' ] }
@@ -58,20 +40,20 @@ server.register(require('hapi-auth-jwt2'), function (err) {
 
 server.register(
     [
-        // {
-        //     register: require('hapi-sequelize'),
-        //     options: {
-        //         database: dbSecurityConfig.database,
-        //         user: dbSecurityConfig.user,
-        //         pass: dbSecurityConfig.password,
-        //         dialect: 'mysql',
-        //         port: 3306,
-        //         models: 'db/models/*.js',
-        //         sequelize: {
-        //             define: configLoader.get('/db/config')
-        //         }
-        //     }
-        // },
+        {
+            register: require('hapi-sequelize'),
+            options: {
+                database: dbSecurityConfig.database,
+                user: dbSecurityConfig.user,
+                pass: dbSecurityConfig.password,
+                dialect: 'mysql',
+                port: 3306,
+                models: 'db/models/*.js',
+                sequelize: {
+                    define: configLoader.get('/db/config')
+                }
+            }
+        },
         {
             register: require('good'),
             options: {
@@ -92,7 +74,7 @@ server.register(
         {
             register: require('hapi-router'),
             options: {
-                routes: 'index.js'
+                routes: 'server/config/routes/*.js'
             }
         },
         {
@@ -105,7 +87,6 @@ server.register(
         } else {
             server.start(function () {
                 console.info('Server started at ' + server.info.uri);
-                // console.log(server.table()[0].table[0]);
             });
         }
     }

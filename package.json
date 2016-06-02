@@ -20,7 +20,7 @@
     "hapi-auth-jwt2": "^7.0.0",
     "hapi-authorization": "^3.0.2",
     "hapi-router": "^3.5.0",
-    "hapi-sequelize": "^3.0.0",
+    "hapi-sequelize": "^3.0.1",
     "hapi-sequelize-crud": "^2.0.9",
     "mysql": "^2.10.2",
     "semantic-ui-css": "^2.1.8",
