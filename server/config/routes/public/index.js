@@ -3,8 +3,8 @@ const Joi = require('joi');
 module.exports = [
     {
         path: '/',
-        method: 'POST',
-        handler: require('../../controllers/index'),
+        method: 'GET',
+        handler: require('../../../controllers/index'),
         config: { 
             auth: false
         }

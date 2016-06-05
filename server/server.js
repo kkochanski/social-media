@@ -74,7 +74,7 @@ server.register(
         {
             register: require('hapi-router'),
             options: {
-                routes: 'server/config/routes/*.js'
+                routes: 'server/config/routes/**/*.js'
             }
         },
         {
