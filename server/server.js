@@ -48,7 +48,7 @@ server.register(
                 pass: dbSecurityConfig.password,
                 dialect: 'mysql',
                 port: 3306,
-                models: 'db/models/*.js',
+                models: 'server/db/models/*.js',
                 sequelize: {
                     define: configLoader.get('/db/config')
                 }

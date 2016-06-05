@@ -1,18 +1,18 @@
 /* jshint indent: 2 */
 
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('User', {
+  return sequelize.define('user', {
     id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       primaryKey: true,
       autoIncrement: true
     },
-    first_name: {
+    firstName: {
       type: DataTypes.STRING,
       allowNull: true
     },
-    last_name: {
+    lastName: {
       type: DataTypes.STRING,
       allowNull: true
     },
@@ -24,23 +24,23 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING,
       allowNull: false
     },
-    created_at: {
+    createdAt: {
       type: DataTypes.DATE,
       allowNull: false
     },
-    updated_at: {
+    updatedAt: {
       type: DataTypes.DATE,
       allowNull: false
     },
-    deleted_at: {
+    deletedAt: {
       type: DataTypes.DATE,
       allowNull: true
     },
-    confirmed_at: {
+    confirmedAt: {
       type: DataTypes.DATE,
       allowNull: true
     },
-    confirmation_token: {
+    confirmationToken: {
       type: DataTypes.STRING,
       allowNull: false
     }
