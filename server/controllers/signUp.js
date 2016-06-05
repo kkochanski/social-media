@@ -16,25 +16,22 @@ exports.signUp = function (request, reply) {
     if(response === null) {
         var models = request.server.plugins['hapi-sequelize'].db.sequelize.models;
         models.user.create(request.payload);
+        response = {data: request.payload};
     }
-    response = {data: {'aa': 'a'}};
 
-    // var JWT   = require('jsonwebtoken');
-    // var obj   = { id:123,"name":"Charlie" }; // object/info you want to sign
-    // var token = JWT.sign(obj, '123123123');
-
-
+    
     return reply(response);
 };
 
+/**
+ * Sign up confirmation
+ * 
+ * @param request
+ * @param reply
+ * @returns {*}
+ */
 exports.signUpConfirmation = function (request, reply) {
-
     var response = {data: {'bbb': request.params.token}};
-
-    // var JWT   = require('jsonwebtoken');
-    // var obj   = { id:123,"name":"Charlie" }; // object/info you want to sign
-    // var token = JWT.sign(obj, '123123123');
-
 
     return reply(response);
 };

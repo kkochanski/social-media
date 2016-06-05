@@ -4,9 +4,7 @@
 angular.module('app.routes', [
     'ui.router'
 ]).
-config(function($stateProvider, $urlRouterProvider) {
-
-    $urlRouterProvider.otherwise('/error');
+config(function($stateProvider, $locationProvider, $urlRouterProvider) {
 
     var loggedMenu = {
         templateUrl: 'shared/menu/loggedMenuView.html',
@@ -132,4 +130,8 @@ config(function($stateProvider, $urlRouterProvider) {
             }
         })
     ;
+
+
+    $locationProvider.html5Mode(true);
+    $urlRouterProvider.otherwise('/error');
 });

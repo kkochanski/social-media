@@ -12,7 +12,6 @@ app.directive('formError', function() {
         },
         template: '<div ng-messages="error" ng-show="statement"><div ng-messages-include="shared/validation/formErrorMessages.html"></div></div>',
         link: function ($scope, element, attr) {
-
             /* There is a hack with $watchers. It's needed, because $watchGroup doesn't support deep comparison. */
             var ifFormSubmitted = false,
                 lastKnownError = {}

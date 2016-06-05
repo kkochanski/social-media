@@ -10,7 +10,10 @@ var dbSecurityConfig = configLoader.get('/db/env/dev');
 const server = new Hapi.Server();
 server.connection({
     host: 'localhost',
-    port: 8000
+    port: 8000,
+    routes: {
+        cors: true
+    }
 });
 
 server.register(require('hapi-auth-jwt2'), function (err) {

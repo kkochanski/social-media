@@ -2,6 +2,7 @@
 
 angular.module('app.services', 
     [
-        'arrayHelperService'
+        'arrayHelperService',
+        'signUpService'
     ]
 );

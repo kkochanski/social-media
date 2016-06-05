@@ -16,7 +16,7 @@ module.exports = {
             validation.error.details.forEach(function(element) {
                 errorsWithMessages[element.path] = element.message;
             });
-            toReturn = Boom.badRequest('Validation failure');
+            toReturn = Boom.badData('Validation failure');
             toReturn.output.payload.invalid_keys = errorsWithMessages;
         }
 

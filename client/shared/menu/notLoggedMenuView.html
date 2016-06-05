@@ -1,4 +1,7 @@
-<a id="sign-up-button" class="ui item" ng-click="vm.openSignUpModal()">Sign Up</a>
+<div ng-controller="signUpController as vm">
+    <a id="sign-up-button" class="ui item" ng-click="openSignUpModal()">Sign Up</a>
+    <div ng-include="'components/sign_up/signUpView.html'"></div>
+</div>
 <a id="log-in-button" class="ui item" ng-click="vm.openLogInModal()">Log In</a>
 
 <div id="log-in-modal" class="ui modal xx-small">
@@ -48,116 +51,5 @@
                 <div class="ui clearing fitted hidden divider"></div>
             </div>
         </form>
-    </div>
-</div>
-
-<div id="sign-up-modal" class="ui modal xx-small">
-    <div class="content">
-
-        <div id="sign-up-email-container" ng-show="vm.showSignUpForm === true">
-            <p class="self center aligned">
-                Sign up with <a href="#" class="red">Facebook</a> or <a href="#" class="red">Google</a>
-            </p>
-
-            <div class="ui horizontal divider">
-                or
-            </div>
-
-            <form name="vm.signUpForm" ng-submit="vm.submitSignUp()" class="ui form" novalidate>
-                <div class="field">
-                    <div class="ui right icon input">
-                        <input type="text" name="firstName" ng-model="vm.user.firstName" placeholder="First name" required>
-                        <i class="user icon"></i>
-                    </div>
-                    <div form-error error="vm.signUpForm.firstName.$error" statement="vm.signUpForm.$submitted"></div>
-                </div>
-                <div class="field">
-                    <div class="ui right icon input">
-                        <input type="text" name="lastName" ng-model="vm.user.lastName" placeholder="Last name" required>
-                        <i class="user icon"></i>
-                    </div>
-                    <div form-error error="vm.signUpForm.lastName.$error" statement="vm.signUpForm.$submitted"></div>
-                </div>
-                <div class="field">
-                    <div class="ui right icon input">
-                        <input type="email" name="email" ng-model="vm.user.email" placeholder="E-mail" required>
-                        <i class="at icon"></i>
-                    </div>
-                    <div form-error error="vm.signUpForm.email.$error" statement="vm.signUpForm.$submitted"></div>
-                </div>
-                <div class="field">
-                    <div class="ui right icon input">
-                        <input type="password" name="password" ng-model="vm.user.password" placeholder="Password" required>
-                        <i class="unlock icon"></i>
-                    </div>
-                    <div form-error error="vm.signUpForm.password.$error" statement="vm.signUpForm.$submitted"></div>
-                </div>
-                <div class="field">
-                    <label>Birthday</label>
-                    <div class="fields">
-                        <div class="three wide field">
-                            <select name="birthday[day]" ng-model="vm.user.birthday.day" required>
-                                <option value="">Day</option>
-                                <option ng-repeat="number in vm.birthday.availableDays" value="{{number}}">{{number}}</option>
-                            </select>
-                            <div form-error error="vm.signUpForm['birthday[day]'].$error" statement="vm.signUpForm.$submitted"></div>
-                        </div>
-                        <div class="five wide field">
-                            <select name="birthday[month]" ng-model="vm.user.birthday.month" required>
-                                <option value="">Month</option>
-                                <option ng-repeat="number in vm.birthday.availableMonths" value="{{number}}">{{number}}</option>
-                            </select>
-                            <div form-error error="vm.signUpForm['birthday[month]'].$error" statement="vm.signUpForm.$submitted"></div>
-                        </div>
-                        <div class="three wide field">
-                            <select name="birthday[year]" ng-model="vm.user.birthday.year" required>
-                                <option value="">Year</option>
-                                <option ng-repeat="number in vm.birthday.availableYears" value="{{number}}">{{number}}</option>
-                            </select>
-                            <div form-error error="vm.signUpForm['birthday[year]'].$error" statement="vm.signUpForm.$submitted"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="field">
-                    <div class="ui checkbox">
-                        <input type="checkbox" name="termsAndConditions" ng-model="termsAndConditions" tabindex="0" class="hidden" required>
-                        <label>I agree to the Terms&amp;Conditions</label>
-                    </div>
-                    <div form-error error="vm.signUpForm.termsAndConditions.$error" statement="vm.signUpForm.$submitted"></div>
-                </div>
-                <button class="ui red fluid huge button" type="submit">Sign up</button>
-            </form>
-        </div>
-
-        <div id="initial-sign-up" ng-show="vm.showSignUpForm === false">
-            <button id="sign-up-facebook" class="massive labeled icon facebook fluid ui button">
-                <i class="facebook icon"></i>
-                Sign up with Facebook
-            </button>
-
-            <button id="sign-up-google" class="massive labeled icon basic fluid ui button">
-                <i class="google plus icon"></i>
-                Sign up with Google
-            </button>
-
-            <div class="ui horizontal divider">
-                Or
-            </div>
-
-            <button id="sign-up-email" ng-click="vm.showSignUpForm = true" class="massive labeled icon red fluid ui button">
-                <i class="mail outline icon"></i>
-                Sign up with E-mail
-            </button>
-        </div>
-
-        <div class="ui divider"></div>
-
-        <div>
-            <span class="self left floated">
-                Already our member?
-            </span>
-            <button ng-click="vm.openLogInModalFromSignUpModal()" class="self right floated ui red basic button">Log In</button>
-            <div class="ui clearing fitted hidden divider"></div>
-        </div>
     </div>
 </div>

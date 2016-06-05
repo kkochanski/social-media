@@ -1,7 +1,8 @@
 'use strict';
 
-angular.module(' ', 
+angular.module('app.directives',
     [
-        'formError'
+        'formError',
+        'formErrorsMainMessage'
     ]
 );
