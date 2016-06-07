@@ -1,7 +1,7 @@
 'use strict';
 
 angular
-    .module('app')
+    .module('app.log-in')
     .controller('logInController', logInController);
 
 logInController.$inject = [];

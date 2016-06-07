@@ -2,7 +2,7 @@
 
 
 angular
-    .module('app')
+    .module('app.groups')
     .controller('groupsController', groupsController);
 
 groupsController.$inject = [];

@@ -2,7 +2,7 @@
 
 
 angular
-    .module('app')
+    .module('app.messages')
     .controller('messagesController', messagesController);
 
 messagesController.$inject = [];

@@ -2,7 +2,7 @@
 
 
 angular
-    .module('app')
+    .module('app.profile')
     .controller('profileController', profileController);
 
 profileController.$inject = [];

@@ -2,7 +2,7 @@
 
 
 angular
-    .module('app')
+    .module('app.friends')
     .controller('friendsController', friendsController);
 
 friendsController.$inject = [];

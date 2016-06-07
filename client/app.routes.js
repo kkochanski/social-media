@@ -7,13 +7,13 @@ angular.module('app.routes', [
 config(function($stateProvider, $locationProvider, $urlRouterProvider) {
 
     var loggedMenu = {
-        templateUrl: 'shared/menu/loggedMenuView.html',
+        templateUrl: 'components/menu/logged-menu.html',
         controller: 'loggedMenuController',
         controllerAs: 'vm'
     };
 
     var notLoggedMenu = {
-        templateUrl: 'shared/menu/notLoggedMenuView.html',
+        templateUrl: 'components/menu/not-logged-menu.html',
         controller: 'notLoggedMenuController',
         controllerAs: 'vm'
     };
@@ -23,10 +23,10 @@ config(function($stateProvider, $locationProvider, $urlRouterProvider) {
             url: '/',
             views: {
                 content: {
-                    templateUrl: 'components/home/homeView.html'
+                    templateUrl: 'components/home/home.html'
                 },
                 preContent: {
-                    templateUrl: 'components/home/preContentView.html'
+                    templateUrl: 'components/home/pre-content.html'
                 },
                 menu: notLoggedMenu
             }
@@ -35,7 +35,7 @@ config(function($stateProvider, $locationProvider, $urlRouterProvider) {
             url: '/account',
             views: {
                 content: {
-                    templateUrl: 'components/account/accountView.html',
+                    templateUrl: 'components/account/account.html',
                     controller: 'accountController',
                     controllerAs: 'vm'
                 },
@@ -49,7 +49,7 @@ config(function($stateProvider, $locationProvider, $urlRouterProvider) {
             url: '/dashboard',
             views: {
                 content: {
-                    templateUrl: 'components/dashboard/dashboardView.html',
+                    templateUrl: 'components/dashboard/dashboard.html',
                     controller: 'dashboardController',
                     controllerAs: 'vm'
                 },
@@ -63,7 +63,7 @@ config(function($stateProvider, $locationProvider, $urlRouterProvider) {
             url: '/friends',
             views: {
                 content: {
-                    templateUrl: 'components/friends/friendsView.html',
+                    templateUrl: 'components/friends/friends.html',
                     controller: 'friendsController',
                     controllerAs: 'vm'
                 },
@@ -77,7 +77,7 @@ config(function($stateProvider, $locationProvider, $urlRouterProvider) {
             url: '/groups',
             views: {
                 content: {
-                    templateUrl: 'components/groups/groupsView.html',
+                    templateUrl: 'components/groups/groups.html',
                     controller: 'groupsController',
                     controllerAs: 'vm'
                 },
@@ -91,7 +91,7 @@ config(function($stateProvider, $locationProvider, $urlRouterProvider) {
             url: '/messages',
             views: {
                 content: {
-                    templateUrl: 'components/messages/messagesView.html',
+                    templateUrl: 'components/messages/messages.html',
                     controller: 'messagesController',
                     controllerAs: 'vm'
                 },
@@ -105,7 +105,7 @@ config(function($stateProvider, $locationProvider, $urlRouterProvider) {
             url: '/notifications',
             views: {
                 content: {
-                    templateUrl: 'components/notifications/notificationsView.html',
+                    templateUrl: 'components/notifications/notifications.html',
                     controller: 'notificationsController',
                     controllerAs: 'vm'
                 },
@@ -119,7 +119,7 @@ config(function($stateProvider, $locationProvider, $urlRouterProvider) {
             url: '/profile',
             views: {
                 content: {
-                    templateUrl: 'components/profile/profileView.html',
+                    templateUrl: 'components/profile/profile.html',
                     controller: 'profileController',
                     controllerAs: 'vm'
                 },

@@ -1,8 +1,7 @@
 'use strict';
 
-
 angular
-    .module('app')
+    .module('app.notifications')
     .controller('notificationsController', notificationsController);
 
 notificationsController.$inject = [];

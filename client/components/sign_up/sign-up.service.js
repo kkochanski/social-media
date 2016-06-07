@@ -1,7 +1,7 @@
 'use strict';
 
 angular
-    .module('app.services', [])
+    .module('app.sign-up')
     .service('signUpService', signUpService)
 ;
 

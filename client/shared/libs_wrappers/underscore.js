@@ -1,7 +1,7 @@
 'use strict';
 
 angular
-    .module('app.factories', [])
+    .module('app.factories')
     .factory('underscore', underscore)
 ;
 

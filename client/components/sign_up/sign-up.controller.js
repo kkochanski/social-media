@@ -1,10 +1,10 @@
 'use strict';
 
 angular
-    .module('app')
+    .module('app.sign-up')
     .controller('signUpController', signUpController);
 
-signUpController.$inject = ['underscore', 'signUpService'];
+signUpController.$inject = ['underscore', 'signUpService', '$scope'];
 
 function signUpController(_, signUpService) {
     var vm = this;

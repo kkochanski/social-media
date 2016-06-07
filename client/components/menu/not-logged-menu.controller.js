@@ -1,7 +1,7 @@
 'use strict';
 
 angular
-    .module('app')
+    .module('app.menu')
     .controller('notLoggedMenuController', notLoggedMenuController);
 
 notLoggedMenuController.$inject = ['$scope'];

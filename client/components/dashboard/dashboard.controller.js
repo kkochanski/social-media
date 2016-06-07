@@ -2,7 +2,7 @@
 
 
 angular
-    .module('app')
+    .module('app.dashboard')
     .controller('dashboardController', dashboardController);
 
 dashboardController.$inject = [];

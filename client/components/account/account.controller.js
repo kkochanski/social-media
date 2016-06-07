@@ -2,7 +2,7 @@
 
 
 angular
-    .module('app')
+    .module('app.account')
     .controller('accountController', accountController);
 
 accountController.$inject = [];

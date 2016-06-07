@@ -2,7 +2,7 @@
 
 
 angular
-    .module('app')
+    .module('app.menu')
     .controller('loggedMenuController', loggedMenuController);
 
 loggedMenuController.$inject = [];

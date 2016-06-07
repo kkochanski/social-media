@@ -1,8 +1,3 @@
 'use strict';
 
-angular.module('app.services', 
-    [
-        'arrayHelperService',
-        'signUpService'
-    ]
-);
+angular.module('app.services', []);
