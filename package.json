@@ -9,7 +9,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "amdefine": "^1.0.0",
     "angular": "^1.5.5",
     "angular-messages": "^1.5.6",
     "angular-ui-router": "^0.3.0",
@@ -29,5 +28,14 @@
     "semantic-ui-css": "^2.1.8",
     "sequelize": "^3.23.1",
     "underscore": "^1.8.3"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-inject": "^4.1.0",
+    "gulp-jshint": "^2.0.1",
+    "gulp-uglify": "^1.5.3",
+    "jshint": "^2.9.2",
+    "jshint-stylish": "^2.2.0"
   }
 }

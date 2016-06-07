@@ -1,8 +1,13 @@
 'use strict';
 
-var app = angular.module('app.directives', []);
+angular
+    .module('app.directives')
+    .directive('formError', formError)
+;
 
-app.directive('formError', function() {
+formError.$inject = ['underscore'];
+
+function formError(_) {
     return {
         restrict: 'AE',
         replace: 'false',
@@ -16,6 +21,7 @@ app.directive('formError', function() {
             var ifFormSubmitted = false,
                 lastKnownError = {}
                 ;
+            console.log('idzidz');
 
             $scope.$watch('error', function (newValue, oldValue) {
                 changeElementErrorClass(newValue);
@@ -30,14 +36,15 @@ app.directive('formError', function() {
 
             function changeElementErrorClass(error) {
                 var fieldContainer = element.parent('div.field');
-                if(ifFormSubmitted === true) {
-                    if(_.isEmpty(error)) {
+                if (ifFormSubmitted === true) {
+                    if (_.isEmpty(error)) {
                         fieldContainer.removeClass('error');
-                    } else {
+                    }
+                    else {
                         fieldContainer.addClass('error');
                     }
                 }
             }
         }
     };
-});
+}

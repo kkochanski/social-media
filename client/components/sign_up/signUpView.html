@@ -15,28 +15,28 @@
             <form name="vm.signUpForm" ng-submit="vm.submitSignUp()" class="ui form" novalidate>
                 <div class="field">
                     <div class="ui right icon input">
-                        <input type="text" name="firstName" ng-model="vm.user.firstName" placeholder="First name" >
+                        <input type="text" name="firstName" ng-model="vm.user.firstName" placeholder="First name" required>
                         <i class="user icon"></i>
                     </div>
                     <div form-error error="vm.signUpForm.firstName.$error" statement="vm.signUpForm.$submitted"></div>
                 </div>
                 <div class="field">
                     <div class="ui right icon input">
-                        <input type="text" name="lastName" ng-model="vm.user.lastName" placeholder="Last name" >
+                        <input type="text" name="lastName" ng-model="vm.user.lastName" placeholder="Last name" required>
                         <i class="user icon"></i>
                     </div>
                     <div form-error error="vm.signUpForm.lastName.$error" statement="vm.signUpForm.$submitted"></div>
                 </div>
                 <div class="field">
                     <div class="ui right icon input">
-                        <input type="email" name="email" ng-model="vm.user.email" placeholder="E-mail" >
+                        <input type="email" name="email" ng-model="vm.user.email" placeholder="E-mail" required>
                         <i class="at icon"></i>
                     </div>
                     <div form-error error="vm.signUpForm.email.$error" statement="vm.signUpForm.$submitted"></div>
                 </div>
                 <div class="field">
                     <div class="ui right icon input">
-                        <input type="password" name="password" ng-model="vm.user.password" placeholder="Password" >
+                        <input type="password" name="password" ng-model="vm.user.password" placeholder="Password" required>
                         <i class="unlock icon"></i>
                     </div>
                     <div form-error error="vm.signUpForm.password.$error" statement="vm.signUpForm.$submitted"></div>
@@ -45,21 +45,21 @@
                     <label>Birthday</label>
                     <div class="fields">
                         <div class="three wide field">
-                            <select name="birthday[day]" ng-model="vm.user.birthday.day" >
+                            <select name="birthday[day]" ng-model="vm.user.birthday.day" required>
                                 <option value="">Day</option>
                                 <option ng-repeat="number in vm.birthday.availableDays" value="{{number}}">{{number}}</option>
                             </select>
                             <div form-error error="vm.signUpForm['birthday[day]'].$error" statement="vm.signUpForm.$submitted"></div>
                         </div>
                         <div class="five wide field">
-                            <select name="birthday[month]" ng-model="vm.user.birthday.month" >
+                            <select name="birthday[month]" ng-model="vm.user.birthday.month" required>
                                 <option value="">Month</option>
                                 <option ng-repeat="number in vm.birthday.availableMonths" value="{{number}}">{{number}}</option>
                             </select>
                             <div form-error error="vm.signUpForm['birthday[month]'].$error" statement="vm.signUpForm.$submitted"></div>
                         </div>
                         <div class="three wide field">
-                            <select name="birthday[year]" ng-model="vm.user.birthday.year" >
+                            <select name="birthday[year]" ng-model="vm.user.birthday.year" required>
                                 <option value="">Year</option>
                                 <option ng-repeat="number in vm.birthday.availableYears" value="{{number}}">{{number}}</option>
                             </select>
@@ -69,7 +69,7 @@
                 </div>
                 <div class="field">
                     <div class="ui checkbox">
-                        <input type="checkbox" name="termsAndConditions" ng-model="termsAndConditions" tabindex="0" class="hidden" >
+                        <input type="checkbox" name="termsAndConditions" ng-model="termsAndConditions" tabindex="0" class="hidden">
                         <label>I agree to the Terms&amp;Conditions</label>
                     </div>
                     <div form-error error="vm.signUpForm.termsAndConditions.$error" statement="vm.signUpForm.$submitted"></div>

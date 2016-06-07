@@ -12,6 +12,6 @@ function signUpService($http, config) {
         return $http.post(config.apiBaseUrl + '/sign-up', data)
             .then(function(response) {
                 return response.data;
-            })
-    }
+            });
+    };
 }
