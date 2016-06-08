@@ -40,7 +40,7 @@ config(function($stateProvider, $locationProvider, $urlRouterProvider) {
                     controllerAs: 'vm'
                 },
                 preContent: {
-                    templateUrl: 'shared/secondary_menu/secondaryMenuView.html'
+                    templateUrl: 'components/secondary_menu/secondary-menu.html'
                 },
                 menu: loggedMenu
             }
@@ -54,7 +54,7 @@ config(function($stateProvider, $locationProvider, $urlRouterProvider) {
                     controllerAs: 'vm'
                 },
                 preContent: {
-                    templateUrl: 'shared/secondary_menu/secondaryMenuView.html'
+                    templateUrl: 'components/secondary_menu/secondary-menu.html'
                 },
                 menu: loggedMenu
             }
@@ -68,7 +68,7 @@ config(function($stateProvider, $locationProvider, $urlRouterProvider) {
                     controllerAs: 'vm'
                 },
                 preContent: {
-                    templateUrl: 'shared/secondary_menu/secondaryMenuView.html'
+                    templateUrl: 'components/secondary_menu/secondary-menu.html'
                 },
                 menu: loggedMenu
             }
@@ -82,7 +82,7 @@ config(function($stateProvider, $locationProvider, $urlRouterProvider) {
                     controllerAs: 'vm'
                 },
                 preContent: {
-                    templateUrl: 'shared/secondary_menu/secondaryMenuView.html'
+                    templateUrl: 'components/secondary_menu/secondary-menu.html'
                 },
                 menu: loggedMenu
             }
@@ -96,7 +96,7 @@ config(function($stateProvider, $locationProvider, $urlRouterProvider) {
                     controllerAs: 'vm'
                 },
                 preContent: {
-                    templateUrl: 'shared/secondary_menu/secondaryMenuView.html'
+                    templateUrl: 'components/secondary_menu/secondary-menu.html'
                 },
                 menu: loggedMenu
             }
@@ -110,7 +110,7 @@ config(function($stateProvider, $locationProvider, $urlRouterProvider) {
                     controllerAs: 'vm'
                 },
                 preContent: {
-                    templateUrl: 'shared/secondary_menu/secondaryMenuView.html'
+                    templateUrl: 'components/secondary_menu/secondary-menu.html'
                 },
                 menu: loggedMenu
             }
@@ -124,7 +124,7 @@ config(function($stateProvider, $locationProvider, $urlRouterProvider) {
                     controllerAs: 'vm'
                 },
                 preContent: {
-                    templateUrl: 'shared/secondary_menu/secondaryMenuView.html'
+                    templateUrl: 'components/secondary_menu/secondary-menu.html'
                 },
                 menu: loggedMenu
             }
