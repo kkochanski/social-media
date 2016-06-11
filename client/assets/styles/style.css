@@ -89,6 +89,14 @@ form div.field p.error-message {
     margin-left: 5px;
 }
 
+#menu > .right.menu .pre-item {
+    display: flex;
+}
+
+#menu > .right.menu .pre-item .item:before {
+    left: 0px;
+}
+
 #landing-page {
     min-height: 400px;
     background-color: #565A5C;

@@ -1,8 +1,10 @@
-<div ng-controller="signUpController as vm">
+<div ng-controller="signUpController as vm" class="pre-item">
     <a id="sign-up-button" class="ui item" ng-click="openSignUpModal()">Sign Up</a>
     <div ng-include="'components/sign_up/sign-up.html'"></div>
 </div>
-<a id="log-in-button" class="ui item" ng-click="vm.openLogInModal()">Log In</a>
+<div class="pre-item">
+    <a id="log-in-button" class="ui item" ng-click="vm.openLogInModal()">Log In</a>
+</div>
 
 <div id="log-in-modal" class="ui modal xx-small">
     <div class="content">
