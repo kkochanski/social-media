@@ -3,7 +3,6 @@ var jshint = require('gulp-jshint');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var inject = require('gulp-inject');
-var series = require('stream-series');
 
 var paths = {
     allScripts: ['gulpfile.js',
@@ -23,8 +22,11 @@ gulp.task('lint', function() {
 
 gulp.task('index', function () {
     var target = gulp.src('./client/index.html');
-    var basicSources = gulp.src(['./client/*.js', './client/components/**/*.module.js']);
+
     var sources = gulp.src([
+        './client/assets/scripts/*.js',
+        './client/*.js',
+        './client/components/**/*.module.js',
         './client/components/**/*.controller.js',
         './client/components/**/*.directive.js',
         './client/components/**/*.factory.js',
@@ -33,6 +35,6 @@ gulp.task('index', function () {
         './client/shared/**/*.js'
     ]);
     
-    return target.pipe(inject(series(basicSources, sources), {relative: true}))
+    return target.pipe(inject(sources, {relative: true}))
         .pipe(gulp.dest('./client'));
 });

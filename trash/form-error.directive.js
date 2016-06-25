@@ -1,5 +1,5 @@
 'use strict';
-
+// <div form-error error="vm.signUpForm.password.$error" statement="vm.signUpForm.$submitted"></div>
 angular
     .module('app.directives')
     .directive('formError', formError)

@@ -1,0 +1,49 @@
+<div id="log-in-modal" class="ui modal xx-small">
+    <div class="content">
+        <button id="log-in-facebook" class="massive labeled icon facebook fluid ui button">
+            <i class="facebook icon"></i>
+            Log in with Facebook
+        </button>
+
+        <button id="log-in-google" class="massive labeled icon basic fluid ui button">
+            <i class="google plus icon"></i>
+            Log in with Google
+        </button>
+        <div class="ui horizontal divider">
+            Or
+        </div>
+        <form name="vm.loginForm" class="ui form" novalidate>
+            <div class="field">
+                <div class="ui big icon input">
+                    <input type="email" name="email" ng-model="email" placeholder="E-mail" required>
+                    <i class="at icon"></i>
+                </div>
+            </div>
+            <div class="field">
+                <div class="ui big icon input">
+                    <input type="password" name="password" ng-model="password" placeholder="Password" required>
+                    <i class="unlock icon"></i>
+                </div>
+            </div>
+            <div class="field">
+                <div class="ui checkbox">
+                    <input type="checkbox" tabindex="0" class="hidden">
+                    <label>Remember me</label>
+                </div>
+                <a href="#" class="red self right floated">Forgot password?</a>
+            </div>
+            <div class="ui clearing fitted hidden divider"></div>
+            <button class="ui red fluid huge button" type="submit">Log In</button>
+        </form>
+
+        <div class="ui divider"></div>
+
+        <div>
+            <span class="self left floated">
+                Don't have an account?
+            </span>
+            <button type="button" ng-click="openSignUpModalFromLogInModal()" class="self right floated ui red basic button">Sign Up</button>
+            <div class="ui clearing fitted hidden divider"></div>
+        </div>
+    </div>
+</div>
