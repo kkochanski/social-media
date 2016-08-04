@@ -10,7 +10,7 @@ formValidation.$inject = ['underscore', 'sugar'];
 function formValidation(_, sugar) {
     return {
         restrict: 'E',
-        replace: 'false',
+        replace: false,
         scope: {
             'errors': '=',
             'formElement': '@'

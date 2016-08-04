@@ -2,7 +2,6 @@
 
 angular
     .module('app', [
-        'ngMessages',
         'app.sign-up',
         'app.profile',
         'app.notifications',
@@ -16,7 +15,8 @@ angular
         'app.services',
         'app.directives',
         'app.factories',
-        'app.menu'
+        'app.menu',
+        'app.config'
     ])
     .value('config', {
     'appName' : 'My Awesome App',

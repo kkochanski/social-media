@@ -9,6 +9,8 @@
             <div class="ui horizontal divider">
                 or
             </div>
+
+            <message type="{{ vm.messageType }}" title="{{ vm.messageTitle }}" content="{{ vm.messageContent }}" show-message="vm.showMessage"></message>
             <form-validation errors="vm.formErrors" form-element="#sign-up-modal form"></form-validation>
             <form name="vm.signUpForm" ng-submit="vm.submitSignUp()" class="ui form" novalidate>
                 <div class="field">
@@ -33,29 +35,6 @@
                     <div class="ui right icon input">
                         <input type="password" name="password" ng-model="vm.user.password" placeholder="Password" >
                         <i class="unlock icon"></i>
-                    </div>
-                </div>
-                <div class="field">
-                    <label>Birthday</label>
-                    <div class="fields">
-                        <div class="three wide field">
-                            <select name="birthday[day]" ng-model="vm.user.birthday.day">
-                                <option value="">Day</option>
-                                <option ng-repeat="number in vm.birthday.availableDays" value="{{number}}">{{number}}</option>
-                            </select>
-                        </div>
-                        <div class="five wide field">
-                            <select name="birthday[month]" ng-model="vm.user.birthday.month">
-                                <option value="">Month</option>
-                                <option ng-repeat="number in vm.birthday.availableMonths" value="{{number}}">{{number}}</option>
-                            </select>
-                        </div>
-                        <div class="three wide field">
-                            <select name="birthday[year]" ng-model="vm.user.birthday.year">
-                                <option value="">Year</option>
-                                <option ng-repeat="number in vm.birthday.availableYears" value="{{number}}">{{number}}</option>
-                            </select>
-                        </div>
                     </div>
                 </div>
                 <p>By clicking 'Sign up', you agree the Terms&amp;Conditions</p>

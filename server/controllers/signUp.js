@@ -22,7 +22,6 @@ exports.signUp = function (request, reply) {
     }).then(function(response) {
         var models = request.server.plugins['hapi-sequelize'].db.sequelize.models,
             toSave = _.clone(request.payload);
-        console.log(request.payload);
         toSave.confirmationToken = require('crypto').randomBytes(64).toString('hex');
         return models.user.create(toSave)
     }).catch(function(error) {
