@@ -1,0 +1,30 @@
+{
+    "db": {
+        "env": {
+            "dev": {
+                "user": "",
+                "password": null,
+                "database": "social_media",
+                "host": "127.0.0.1"
+            },
+            "prod": {
+                "user": "",
+                "password": null,
+                "database": "social_media",
+                "host": "127.0.0.1"
+            }
+        },
+        "config": {
+            "underscoredAll": true,
+            "underscored": false
+        }
+    },
+    "email": {
+        "host": "",
+        "port": 0,
+        "auth": {
+            "user": "",
+            "pass": ""
+        }
+    }
+}

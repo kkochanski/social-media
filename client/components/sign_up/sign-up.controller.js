@@ -32,7 +32,7 @@ function signUpController(_, signUpService) {
                     vm.showMessage = true;
                     vm.messageType = 'error';
                     vm.messageTitle = 'Error occurred';
-                    vm.messageContent = response.data.message;
+                    vm.messageContent = response.data !== null ? response.data.message : 'Internal server error. Please try again or report this.';
                 }
             })
             .then(function() {

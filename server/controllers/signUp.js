@@ -23,17 +23,26 @@ exports.signUp = function (request, reply) {
         var models = request.server.plugins['hapi-sequelize'].db.sequelize.models,
             toSave = _.clone(request.payload);
         toSave.confirmationToken = require('crypto').randomBytes(64).toString('hex');
+
         return models.user.create(toSave)
+    }).then(function(createdUser) {
+        var nodemailer = require('nodemailer'),
+            transporter = nodemailer.createTransport();
+
+        return Promise.resolve(createdUser);
     }).catch(function(error) {
         if(error.isBoom) {
             return error;
         }
         var Boom = require('boom');
+
         return Boom.notAcceptable('Unexpected error occurred. Please try again or contact with admin.');
     }).then(function(response) {
         if(!response.isBoom) {
             response = request.payload;
+            response.password = undefined;
         }
+
         return reply(response);
     });
 };
