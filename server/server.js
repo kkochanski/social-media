@@ -3,9 +3,14 @@
 
 const Hapi = require('hapi');
 const Confidence = require('confidence');
+const Nodemailer = require('nodemailer');
+const Bottle = require('bottlejs');
+
 var configLoader = new Confidence.Store();
 configLoader.load(require('./config/config.json'));
-var dbSecurityConfig = configLoader.get('/db/env/dev');
+
+var dbSecurityConfig = configLoader.get('/db/env/dev'),
+    mailTransporter = Nodemailer.createTransport(configLoader.get('/email'));
 
 const server = new Hapi.Server();
 server.connection({
@@ -15,6 +20,11 @@ server.connection({
         cors: true
     }
 });
+
+var dependencyInjection = new Bottle();
+dependencyInjection.service('mailTransporter', function(){ return Nodemailer.createTransport(configLoader.get('/email/mailer')) });
+dependencyInjection.service('configLoader', function(){ return configLoader });
+server.app.di = dependencyInjection;
 
 server.register(require('hapi-auth-jwt2'), function (err) {
 
@@ -77,7 +87,7 @@ server.register(
         {
             register: require('hapi-router'),
             options: {
-                routes: 'server/config/routes/**/*.js'
+                routes: 'config/routes/**/*.js'
             }
         },
         {
