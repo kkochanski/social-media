@@ -2,7 +2,7 @@
 
 /**
  * Simple sign up action
- * 
+ *
  * @param request
  * @param reply
  * @returns {*}
@@ -10,7 +10,8 @@
 exports.signUp = function (request, reply) {
     var userValidationSchema = require('./../validation_schemas/user.js'),
         validation = require('../services/validation'),
-        _ = require('underscore');
+        _ = require('underscore'),
+        sequelize = request.server.plugins['hapi-sequelize'].db.sequelize;
 
     new Promise(function(resolve, reject) {
         var validationResult = validation.validate(request.payload, userValidationSchema);
@@ -20,25 +21,49 @@ exports.signUp = function (request, reply) {
             reject(validationResult);
         }
     }).then(function(response) {
-        var models = request.server.plugins['hapi-sequelize'].db.sequelize.models,
+        var models = sequelize.models,
             toSave = _.clone(request.payload);
         toSave.confirmationToken = require('crypto').randomBytes(64).toString('hex');
 
-        return models.user.create(toSave)
-    }).then(function(createdUser) {
-        var nodemailer = require('nodemailer'),
-            transporter = nodemailer.createTransport();
+        return sequelize.transaction().then(function(t) {
+            return models.user.create(toSave, {transaction: t}).catch(function(err) {
+                return Promise.reject({'code': 'db-error', 'msg': err});
+            }).then(function (user) {
+                var mailOptions = {
+                    from: request.server.app.di.container.configLoader.get('/email/config/from'),
+                    to: user.email,
+                    subject: 'Hello dude ✔',
+                    text: 'Hello world to me 🐴',
+                    html: '<b>Hello world 🐴</b>'
+                };
 
-        return Promise.resolve(createdUser);
+                return request.server.app.di.container.mailTransporter.sendMail(mailOptions);
+            }).catch(function(err) {
+                return Promise.reject(err.code === 'db-error' ? err : {'code': 'mail-error', 'msg': err});
+            }).then(function() {
+                t.commit();
+                return Promise.resolve();
+            }).catch(function (err) {
+                t.rollback();
+                return Promise.reject(err);
+            });
+        });
+
     }).catch(function(error) {
-        if(error.isBoom) {
+        if(typeof error === 'object' && error.isBoom) {
             return error;
         }
-        var Boom = require('boom');
 
+        var Boom = require('boom'),
+            errorRowLog = 'Error in \'signUp\' action. Code: \'%s\'';
+        request.server.app.di.container.logger.error(
+            errorRowLog,
+            typeof error === 'object' && error.code !== undefined ?  error.code : 'default-error',
+            typeof error === 'object' && error.msg !== undefined ? error.msg : ''
+        );
         return Boom.notAcceptable('Unexpected error occurred. Please try again or contact with admin.');
     }).then(function(response) {
-        if(!response.isBoom) {
+        if(response === undefined) {
             response = request.payload;
             response.password = undefined;
         }
@@ -49,12 +74,16 @@ exports.signUp = function (request, reply) {
 
 /**
  * Sign up confirmation
- * 
+ *
  * @param request
  * @param reply
  * @returns {*}
  */
 exports.signUpConfirmation = function (request, reply) {
+
+    // console.log(request.server.app.key);
+
+
     var response = {data: {'bbb': request.params.token}};
 
     return reply(response);

@@ -10,7 +10,7 @@ var configLoader = new Confidence.Store();
 configLoader.load(require('./config/config.json'));
 
 var dbSecurityConfig = configLoader.get('/db/env/dev'),
-    mailTransporter = Nodemailer.createTransport(configLoader.get('/email'));
+    mailTransporter = Nodemailer.createTransport(configLoader.get('/email/mailer'));
 
 const server = new Hapi.Server();
 server.connection({
@@ -24,6 +24,15 @@ server.connection({
 var dependencyInjection = new Bottle();
 dependencyInjection.service('mailTransporter', function(){ return Nodemailer.createTransport(configLoader.get('/email/mailer')) });
 dependencyInjection.service('configLoader', function(){ return configLoader });
+dependencyInjection.service('logger', function(){
+    var winston = require('winston');
+    return new(winston.Logger)({
+        transports: [
+            new(winston.transports.Console)(),
+            new(winston.transports.File)({filename: 'logs/logs.log'})
+        ]
+    });
+});
 server.app.di = dependencyInjection;
 
 server.register(require('hapi-auth-jwt2'), function (err) {
@@ -61,7 +70,7 @@ server.register(
                 pass: dbSecurityConfig.password,
                 dialect: 'mysql',
                 port: 3306,
-                models: 'server/db/models/*.js',
+                models: 'db/models/*.js',
                 sequelize: {
                     define: configLoader.get('/db/config')
                 }
