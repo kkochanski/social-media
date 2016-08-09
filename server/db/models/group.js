@@ -1,30 +1,50 @@
-/* jshint indent: 2 */
+'use strict';
 
-module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('group', {
-    id: {
-      type: DataTypes.INTEGER(11),
-      allowNull: false,
-      primaryKey: true,
-      autoIncrement: true
-    },
+var mongoose = require('mongoose'),
+    Schema = mongoose.Schema;
+
+module.exports = new Schema({
+    users: [
+        {
+            userId: Schema.Types.ObjectId,
+            firstName: String,
+            lastNAme: String,
+            profileImage: String,
+            joinedAt: {
+                type: Date,
+                default: Date.now
+            },
+            privilege: {
+                type: String,
+                enum: ['user', 'moderator', 'admin'],
+                default: 'user'
+            }
+        }
+    ],
+    numberOfUsers: Number,
     name: {
-      type: DataTypes.STRING,
-      allowNull: true
+        type: String,
+        required: true
     },
     description: {
-      type: DataTypes.STRING,
-      allowNull: true
+        type: String,
+        required: true
     },
-    created_at: {
-      type: DataTypes.DATE,
-      allowNull: false
+    icon: String,
+    createdAt: {
+        type: Date,
+        default: Date.now
     },
-    updated_at: {
-      type: DataTypes.DATE,
-      allowNull: false
-    }
-  }, {
-    tableName: 'group'
-  });
-};
+    createdBy: {
+        userId: Schema.Types.ObjectId,
+        firstName: String,
+        lastNAme: String,
+        profileImage: String
+    },
+    updatedAt: {
+        type: Date,
+        default: Date.now
+    },
+    deletedAt: Date
+});
+

@@ -33,7 +33,31 @@ dependencyInjection.service('logger', function(){
         ]
     });
 });
+dependencyInjection.service('mongoose', function(){
+    var mongoose = require('mongoose');
+    mongoose.Promise = global.Promise;
+
+    return mongoose.createConnection(configLoader.get('/db/dev'));
+});
+dependencyInjection.factory('testModel', function(container){
+    var testModel = container.mongoose.model('test', require('./db/models/test.js'));
+
+    return new testModel();
+});
 server.app.di = dependencyInjection;
+server.app.serverUrl = 'http://localhost:8000';
+
+var testModel = dependencyInjection.container.testModel;
+testModel.key = 3;
+testModel.save().then(function(tmp) {
+    console.log('success');
+    console.log(tmp);
+}).catch( function() {
+    console.log('failure');
+});
+
+
+
 
 server.register(require('hapi-auth-jwt2'), function (err) {
 
@@ -62,20 +86,6 @@ server.register(require('hapi-auth-jwt2'), function (err) {
 
 server.register(
     [
-        {
-            register: require('hapi-sequelize'),
-            options: {
-                database: dbSecurityConfig.database,
-                user: dbSecurityConfig.user,
-                pass: dbSecurityConfig.password,
-                dialect: 'mysql',
-                port: 3306,
-                models: 'db/models/*.js',
-                sequelize: {
-                    define: configLoader.get('/db/config')
-                }
-            }
-        },
         {
             register: require('good'),
             options: {

@@ -29,12 +29,12 @@ exports.signUp = function (request, reply) {
             return models.user.create(toSave, {transaction: t}).catch(function(err) {
                 return Promise.reject({'code': 'db-error', 'msg': err});
             }).then(function (user) {
-                var mailOptions = {
+                var confirmationUrl = request.server.app.serverUrl + '/sign-up/confirmation/' + user.confirmationToken,
+                    mailOptions = {
                     from: request.server.app.di.container.configLoader.get('/email/config/from'),
                     to: user.email,
-                    subject: 'Hello dude ✔',
-                    text: 'Hello world to me 🐴',
-                    html: '<b>Hello world 🐴</b>'
+                    subject: 'Account registration',
+                    html: '<h3>Hello ' + user.firstName + '</h3> <div>Thank you for your registration. To end up your sign up process, please confirm your e-mail address by click this url: <a href="' + confirmationUrl + '/' + '">Confirmation URL</a> </div>'
                 };
 
                 return request.server.app.di.container.mailTransporter.sendMail(mailOptions);

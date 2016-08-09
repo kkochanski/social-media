@@ -1,44 +1,56 @@
-/* jshint indent: 2 */
+'use strict';
 
-module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('post', {
-    id: {
-      type: DataTypes.INTEGER(11),
-      allowNull: false,
-      primaryKey: true,
-      autoIncrement: true
+var mongoose = require('mongoose'),
+    Schema = mongoose.Schema;
+
+module.exports = new Schema({
+    content: String,
+    createdAt: {
+        type: Date,
+        default: Date.now
     },
-    content: {
-      type: DataTypes.STRING,
-      allowNull: false
+    updatedAt: {
+        type: Date,
+        default: Date.now
     },
-    created_at: {
-      type: DataTypes.DATE,
-      allowNull: false
+    deletedAt: Date,
+    possession: {
+        type: String,
+        enum: ['dashboard', 'group'],
+        default: 'dashboard'
     },
-    updated_at: {
-      type: DataTypes.DATE,
-      allowNull: false
+    possessionElementId: Schema.Types.ObjectId,
+    userId: ObjectId,
+    likes: [
+        {
+            userId: ObjectId,
+            createdAt: {
+                type: Date,
+                default: Date.now
+            }
+        }
+    ],
+    numberOfLikes: {
+        type: Number,
+        default: 0
     },
-    user_id: {
-      type: DataTypes.INTEGER(11),
-      allowNull: false,
-      primaryKey: true,
-      references: {
-        model: 'user',
-        key: 'id'
-      }
-    },
-    group_id: {
-      type: DataTypes.INTEGER(11),
-      allowNull: false,
-      primaryKey: true,
-      references: {
-        model: 'group',
-        key: 'id'
-      }
-    }
-  }, {
-    tableName: 'post'
-  });
-};
+    comments: [
+        {
+            content: {
+                type: String,
+                required: true
+            },
+            createdAt: {
+                type: Date,
+                default: Date.now
+            },
+            updatedAt: {
+                type: Date,
+                default: Date.now
+            },
+            userId: Schema.Types.ObjectId
+        }
+    ],
+    images: [String]
+});
+

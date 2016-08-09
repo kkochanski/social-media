@@ -1,13 +1,18 @@
 {
-  "name": "kkochanski",
+  "name": "social_media",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server/server.js",
   "scripts": {
-    "debug": "node --debug server.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://kkochanski@bitbucket.org/kkochanski/social_media.git"
+  },
+  "author": "kkochanski",
   "license": "ISC",
+  "homepage": "https://bitbucket.org/kkochanski/social_media#readme",
   "dependencies": {
     "angular": "^1.5.8",
     "angular-sanitize": "^1.5.8",
@@ -23,12 +28,11 @@
     "hapi-auth-jwt2": "^7.0.0",
     "hapi-authorization": "^3.0.2",
     "hapi-router": "^3.5.0",
-    "hapi-sequelize": "^2.0.0",
     "joi": "github:hapijs/joi",
-    "mysql": "^2.11.1",
+    "mongodb": "^2.2.5",
+    "mongoose": "^4.5.8",
     "nodemailer": "^2.5.0",
     "semantic-ui-css": "^2.2.2",
-    "sequelize": "^3.23.6",
     "underscore": "^1.8.3",
     "winston": "^2.2.0"
   },
