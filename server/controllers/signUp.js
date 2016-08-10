@@ -8,10 +8,10 @@
  * @returns {*}
  */
 exports.signUp = function (request, reply) {
-    var userValidationSchema = require('./../validation_schemas/user.js'),
+    var userValidationSchema = require('./../db/validation_schemas/user.js'),
         validation = require('../services/validation'),
-        _ = require('underscore'),
-        sequelize = request.server.plugins['hapi-sequelize'].db.sequelize;
+        Promise = require('bluebird'),
+        _ = require('underscore');
 
     new Promise(function(resolve, reject) {
         var validationResult = validation.validate(request.payload, userValidationSchema);
@@ -21,47 +21,51 @@ exports.signUp = function (request, reply) {
             reject(validationResult);
         }
     }).then(function(response) {
-        var models = sequelize.models,
-            toSave = _.clone(request.payload);
-        toSave.confirmationToken = require('crypto').randomBytes(64).toString('hex');
+        var toSave = _.clone(request.payload);
+        toSave.confirmationToken = require('crypto').randomBytes(28).toString('hex');
+        var userModel = request.server.app.di.container.userModel;
 
-        return sequelize.transaction().then(function(t) {
-            return models.user.create(toSave, {transaction: t}).catch(function(err) {
+        return userModel.then(function (model) {
+            var user = new model(toSave);
+            return user.save().catch(function(err) {
                 return Promise.reject({'code': 'db-error', 'msg': err});
-            }).then(function (user) {
+            }).then(function (createdUser) {
                 var confirmationUrl = request.server.app.serverUrl + '/sign-up/confirmation/' + user.confirmationToken,
                     mailOptions = {
-                    from: request.server.app.di.container.configLoader.get('/email/config/from'),
-                    to: user.email,
-                    subject: 'Account registration',
-                    html: '<h3>Hello ' + user.firstName + '</h3> <div>Thank you for your registration. To end up your sign up process, please confirm your e-mail address by click this url: <a href="' + confirmationUrl + '/' + '">Confirmation URL</a> </div>'
-                };
+                        from: request.server.app.di.container.configLoader.get('/email/config/from'),
+                        to: createdUser.email,
+                        subject: 'Account registration',
+                        html: '<h3>Hello ' + createdUser.firstName + '</h3> <div>Thank you for your registration. To end up your sign up process, please confirm your e-mail address by click this url: <a href="' + confirmationUrl + '/' + '">Confirmation URL</a> </div>'
+                    };
 
                 return request.server.app.di.container.mailTransporter.sendMail(mailOptions);
             }).catch(function(err) {
                 return Promise.reject(err.code === 'db-error' ? err : {'code': 'mail-error', 'msg': err});
             }).then(function() {
-                t.commit();
                 return Promise.resolve();
             }).catch(function (err) {
-                t.rollback();
                 return Promise.reject(err);
             });
-        });
-
+        }).catch(function (err) {
+            return Promise.reject(err);
+        })
     }).catch(function(error) {
         if(typeof error === 'object' && error.isBoom) {
             return error;
         }
 
         var Boom = require('boom'),
-            errorRowLog = 'Error in \'signUp\' action. Code: \'%s\'';
+            errorRowLog = 'Error in \'signUp\' action. Code: \'%s\'',
+            messageToUser = 'Unexpected error occurred. Please try again or contact with admin.';
         request.server.app.di.container.logger.error(
             errorRowLog,
             typeof error === 'object' && error.code !== undefined ?  error.code : 'default-error',
-            typeof error === 'object' && error.msg !== undefined ? error.msg : ''
+            typeof error === 'object' && error.msg !== undefined ? error.msg : error
         );
-        return Boom.notAcceptable('Unexpected error occurred. Please try again or contact with admin.');
+        if(error.code === 'mail-error') {
+            messageToUser = 'User was created, but failed to send email. We will try to send next e-mail as soon as possible. Also on your each login, we will try to resend confirmation e-mail.'
+        }
+        return Boom.notAcceptable(messageToUser);
     }).then(function(response) {
         if(response === undefined) {
             response = request.payload;

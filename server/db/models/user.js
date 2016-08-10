@@ -6,13 +6,13 @@ var mongoose = require('mongoose'),
 module.exports = new Schema({
     firstName:  String,
     lastName: String,
-    email:   { type: String, required: true },
-    password:   { type: String, required: true },
+    email:   String,
+    password:   String,
     profileImage: String,
     createdAt:   { type: Date, default: Date.now },
     updatedAt:   { type: Date, default: Date.now },
     deletedAt:   Date,
-    confirmedAt:   Date,
+    confirmedAt:   { type: Date, default: null },
     confirmationToken:   String,
     friends: [
         {

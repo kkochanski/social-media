@@ -22,14 +22,8 @@ module.exports = new Schema({
         }
     ],
     numberOfUsers: Number,
-    name: {
-        type: String,
-        required: true
-    },
-    description: {
-        type: String,
-        required: true
-    },
+    name: String,
+    description: String,
     icon: String,
     createdAt: {
         type: Date,

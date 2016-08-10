@@ -17,6 +17,7 @@
     "angular": "^1.5.8",
     "angular-sanitize": "^1.5.8",
     "angular-ui-router": "^0.3.1",
+    "bluebird": "^3.4.1",
     "boom": "github:hapijs/boom",
     "bottlejs": "^1.4.0",
     "confidence": "^3.0.1",

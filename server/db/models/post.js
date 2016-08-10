@@ -36,10 +36,7 @@ module.exports = new Schema({
     },
     comments: [
         {
-            content: {
-                type: String,
-                required: true
-            },
+            content: String,
             createdAt: {
                 type: Date,
                 default: Date.now

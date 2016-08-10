@@ -5,12 +5,10 @@ const Hapi = require('hapi');
 const Confidence = require('confidence');
 const Nodemailer = require('nodemailer');
 const Bottle = require('bottlejs');
+const Promise = require('bluebird');
 
 var configLoader = new Confidence.Store();
 configLoader.load(require('./config/config.json'));
-
-var dbSecurityConfig = configLoader.get('/db/env/dev'),
-    mailTransporter = Nodemailer.createTransport(configLoader.get('/email/mailer'));
 
 const server = new Hapi.Server();
 server.connection({
@@ -35,21 +33,41 @@ dependencyInjection.service('logger', function(){
 });
 dependencyInjection.service('mongoose', function(){
     var mongoose = require('mongoose');
-    mongoose.Promise = global.Promise;
+    mongoose.Promise = Promise;
 
-    return mongoose.createConnection(configLoader.get('/db/dev'));
+    return mongoose.connect(configLoader.get('/db/dev')).then(function() {
+        return Promise.resolve(mongoose);
+    }).catch(function(err) {
+        return Promise.reject(err);
+    });
 });
 dependencyInjection.factory('conversationModel', function(container){
-    return new container.mongoose.model('user', require('./db/models/conversation.js'))();
+    return container.mongoose.then(function(mongoose) {
+        return Promise.resolve(mongoose.model('conversation', require('./db/models/conversation.js')));
+    }).catch(function(err){
+        return Promise.reject(err);
+    });
 });
 dependencyInjection.factory('groupModel', function(container){
-    return new container.mongoose.model('user', require('./db/models/group.js'))();
+    return container.mongoose.then(function(mongoose) {
+        return Promise.resolve(mongoose.model('group', require('./db/models/group.js')));
+    }).catch(function(err){
+        return Promise.reject(err);
+    });
 });
 dependencyInjection.factory('postModel', function(container){
-    return new container.mongoose.model('user', require('./db/models/post.js'))();
+    return container.mongoose.then(function(mongoose) {
+        return Promise.resolve(mongoose.model('post', require('./db/models/post.js')));
+    }).catch(function(err){
+        return Promise.reject(err);
+    });
 });
 dependencyInjection.factory('userModel', function(container){
-    return new container.mongoose.model('user', require('./db/models/user.js'))();
+    return container.mongoose.then(function(mongoose) {
+        return Promise.resolve(mongoose.model('user', require('./db/models/user.js')));
+    }).catch(function(err){
+        return Promise.reject(err);
+    });
 });
 server.app.di = dependencyInjection;
 server.app.serverUrl = 'http://localhost:8000';
