@@ -33,7 +33,7 @@ exports.signUp = function (request, reply) {
                 var confirmationUrl = request.server.app.serverUrl + '/sign-up/confirmation/' + user.confirmationToken,
                     mailOptions = {
                         from: request.server.app.di.container.configLoader.get('/email/config/from'),
-                        to: '',
+                        to: createdUser.email,
                         subject: 'Account registration',
                         html: '<h3>Hello ' + createdUser.firstName + '</h3> <div>Thank you for your registration. To end up your sign up process, please confirm your e-mail address by click this url: <a href="' + confirmationUrl + '/' + '">Confirmation URL</a> </div>'
                     };
