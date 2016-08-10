@@ -41,33 +41,24 @@ dependencyInjection.service('mongoose', function(){
         return Promise.reject(err);
     });
 });
-dependencyInjection.factory('conversationModel', function(container){
+function registerMongooseModel(container, modelName) {
     return container.mongoose.then(function(mongoose) {
-        return Promise.resolve(mongoose.model('conversation', require('./db/models/conversation.js')));
+        return Promise.resolve(mongoose.model(modelName, require('./db/models/' + modelName + '.js')));
     }).catch(function(err){
         return Promise.reject(err);
     });
+}
+dependencyInjection.factory('conversationModel', function(container){
+    return registerMongooseModel(container, 'conversation');
 });
 dependencyInjection.factory('groupModel', function(container){
-    return container.mongoose.then(function(mongoose) {
-        return Promise.resolve(mongoose.model('group', require('./db/models/group.js')));
-    }).catch(function(err){
-        return Promise.reject(err);
-    });
+    return registerMongooseModel(container, 'group');
 });
 dependencyInjection.factory('postModel', function(container){
-    return container.mongoose.then(function(mongoose) {
-        return Promise.resolve(mongoose.model('post', require('./db/models/post.js')));
-    }).catch(function(err){
-        return Promise.reject(err);
-    });
+    return registerMongooseModel(container, 'post');
 });
 dependencyInjection.factory('userModel', function(container){
-    return container.mongoose.then(function(mongoose) {
-        return Promise.resolve(mongoose.model('user', require('./db/models/user.js')));
-    }).catch(function(err){
-        return Promise.reject(err);
-    });
+    return registerMongooseModel(container, 'user');
 });
 server.app.di = dependencyInjection;
 server.app.serverUrl = 'http://localhost:8000';
