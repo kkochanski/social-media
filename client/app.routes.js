@@ -31,6 +31,18 @@ config(function($stateProvider, $locationProvider, $urlRouterProvider) {
                 menu: notLoggedMenu
             }
         })
+        .state('signUpConfirmation', {
+            url: '/sign-up/confirmation/:token',
+            views: {
+                content: {
+                    templateUrl: 'components/sign_up/sign-up-confirmation.html'
+                },
+                preContent: {
+                    templateUrl: 'components/home/pre-content.html'
+                },
+                menu: notLoggedMenu
+            }
+        })
         .state('account', {
             url: '/account',
             views: {

@@ -19,7 +19,10 @@ angular
         'app.config'
     ])
     .value('config', {
-    'appName' : 'My Awesome App',
-    'apiBaseUrl' : 'http://localhost:8000'
+        'appName': 'My Awesome App',
+        'apiBaseUrl': 'http://localhost:8000',
+        'errorsMessages': {
+            'internalError': 'Internal server error. Please try again or report this.'
+        }
     })
 ;

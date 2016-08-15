@@ -61,12 +61,8 @@ exports.signUp = function (request, reply) {
         }
 
         var Boom = require('boom'),
-            errorRowLog = 'Error in \'signUp\' action. Code: \'%s\'';
-        request.server.app.di.container.logger.error(
-            errorRowLog,
-            typeof error === 'object' && error.code !== undefined ?  error.code : 'default-error',
-            typeof error === 'object' && error.msg !== undefined ? error.msg : error
-        );
+            errorRowLog = 'Error in \'signUp\' action.';
+        request.server.app.di.container.logger.error(errorRowLog, error);
 
         return Boom.notAcceptable('Unexpected error occurred. Please try again or contact with admin.');
     }).then(function(response) {
@@ -92,9 +88,9 @@ exports.signUpConfirmation = function (request, reply) {
         Promise = require('bluebird');
 
     userModel.then(function(userModel) {
-        return userModel.findOne({'confirmationToken': request.params.token, 'confirmedAt': null}).then(function(user) {
+        return userModel.findOne({'confirmationToken': request.payload.token, 'confirmedAt': null}).then(function(user) {
             if(user === null) {
-                return userModel.findOne({'confirmationToken': request.params.token}).then(function(user) {
+                return userModel.findOne({'confirmationToken': request.payload.token}).then(function(user) {
                     var msg = user !== null ? 'Your e-mail is already confirmed.' : 'Can\'t find user with given token. Your token is invalid.',
                         err = {code: 'internal', msg: msg};
 
@@ -102,7 +98,7 @@ exports.signUpConfirmation = function (request, reply) {
                 })
             }
 
-            user.update({'confirmedAt': new Date()}).then(function(user) {
+            return user.update({'confirmedAt': new Date()}).then(function(err, numberAffected, rawResponse) {
                 return Promise.resolve({'email': user.email, 'firstName': user.firstName, 'lastName': user.lastName, 'confirmationToken': user.confirmationToken});
             }).catch(function(err) {
                 return Promise.reject({code: 'db-error', msg: err});
@@ -116,7 +112,7 @@ exports.signUpConfirmation = function (request, reply) {
             err = {code : 'default-error', msg: err};
         }
 
-        request.server.app.di.container.logger.error('Error in \'signUp\' action. Code: \'%s\', message: \'%s\'', err.code, err.msg);
+        request.server.app.di.container.logger.error('Error in \'signUpConfirmation\' action', err);
 
         return Boom.notAcceptable(err.code === 'internal' ? err.msg : 'Unexpected error occurred. Please try again or contact with admin.');
     }).then(function(response) {

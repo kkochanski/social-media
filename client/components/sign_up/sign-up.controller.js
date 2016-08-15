@@ -4,9 +4,9 @@ angular
     .module('app.sign-up')
     .controller('signUpController', signUpController);
 
-signUpController.$inject = ['underscore', 'signUpService'];
+signUpController.$inject = ['underscore', 'signUpService', 'config'];
 
-function signUpController(_, signUpService) {
+function signUpController(_, signUpService, config) {
     var vm = this;
 
     vm.submitSignUp = submitSignUp;
@@ -32,7 +32,7 @@ function signUpController(_, signUpService) {
                     vm.showMessage = true;
                     vm.messageType = 'error';
                     vm.messageTitle = 'Error occurred';
-                    vm.messageContent = response.data !== null ? response.data.message : 'Internal server error. Please try again or report this.';
+                    vm.messageContent = response.data !== null ? response.data.message : config.errorsMessages.internalError;
                 }
             })
             .then(function() {

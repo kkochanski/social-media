@@ -9,8 +9,8 @@ module.exports = [
         }
     },
     {
-        path: '/sign-up/confirmation/{token}',
-        method: 'GET',
+        path: '/sign-up/confirmation',
+        method: 'POST',
         handler: require('../../../controllers/signUp').signUpConfirmation,
         config: {
             auth: false
