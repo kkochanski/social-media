@@ -7,7 +7,7 @@ angular
 logInController.$inject = [];
 
 function logInController() {
-    var vm = this;
+    const vm = this;
 
 
 }

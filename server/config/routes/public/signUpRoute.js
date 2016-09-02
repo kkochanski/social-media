@@ -3,7 +3,7 @@ module.exports = [
     {
         path: '/sign-up',
         method: 'POST',
-        handler: require('../../../controllers/signUp').signUp,
+        handler: require('../../../controllers/signUpController').signUp,
         config: {
             auth: false
         }
@@ -11,7 +11,7 @@ module.exports = [
     {
         path: '/sign-up/confirmation',
         method: 'POST',
-        handler: require('../../../controllers/signUp').signUpConfirmation,
+        handler: require('../../../controllers/signUpController').signUpConfirmation,
         config: {
             auth: false
         }

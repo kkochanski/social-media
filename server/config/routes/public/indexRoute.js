@@ -4,7 +4,7 @@ module.exports = [
     {
         path: '/',
         method: 'GET',
-        handler: require('../../../controllers/index'),
+        handler: require('../../../controllers/indexController'),
         config: { 
             auth: false
         }

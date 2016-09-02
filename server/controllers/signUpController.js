@@ -8,29 +8,31 @@
  * @returns {*}
  */
 exports.signUp = function (request, reply) {
-    var userValidationSchema = require('./../db/validation_schemas/user.js'),
+    const userValidationSchema = require('./../db/validation_schemas/user.js'),
         validation = require('../services/validation'),
         Promise = require('bluebird'),
-        _ = require('underscore');
+        _ = require('underscore'),
+        bcrypt = require('bcrypt');
+
 
     new Promise(function(resolve, reject) {
-        var validationResult = validation.validate(request.payload, userValidationSchema);
+        const validationResult = validation.validate(request.payload, userValidationSchema);
         if(validationResult === null) {
             resolve();
         } else {
             reject(validationResult);
         }
     }).then(function(response) {
-        var toSave = _.clone(request.payload);
-        toSave.confirmationToken = require('crypto').randomBytes(28).toString('hex');
-        var userModel = request.server.app.di.container.userModel;
+        return request.server.app.di.container.userModel.then(function (userModel) {
+            let toSave = _.clone(request.payload);
+            toSave.confirmationToken = require('crypto').randomBytes(28).toString('hex');
+            toSave.password = bcrypt.hashSync(toSave.password, 10);
+            const user = new userModel(toSave);
 
-        return userModel.then(function (userModel) {
-            var user = new userModel(toSave);
             return user.save().catch(function(err) {
                 return Promise.reject({code: 'db-error', msg: err});
             }).then(function (createdUser) {
-                var confirmationUrl = request.server.app.serverUrl + '/sign-up/confirmation/' + user.confirmationToken,
+                const confirmationUrl = request.server.app.serverUrl + '/sign-up/confirmation/' + user.confirmationToken,
                     mailOptions = {
                         from: request.server.app.di.container.configLoader.get('/email/config/from'),
                         to: createdUser.email,
@@ -60,7 +62,7 @@ exports.signUp = function (request, reply) {
             return error;
         }
 
-        var Boom = require('boom'),
+        const Boom = require('boom'),
             errorRowLog = 'Error in \'signUp\' action.';
         request.server.app.di.container.logger.error(errorRowLog, error);
 
@@ -84,14 +86,14 @@ exports.signUp = function (request, reply) {
  */
 exports.signUpConfirmation = function (request, reply) {
 
-    var userModel = request.server.app.di.container.userModel,
+    const userModel = request.server.app.di.container.userModel,
         Promise = require('bluebird');
 
     userModel.then(function(userModel) {
         return userModel.findOne({'confirmationToken': request.payload.token, 'confirmedAt': null}).then(function(user) {
             if(user === null) {
                 return userModel.findOne({'confirmationToken': request.payload.token}).then(function(user) {
-                    var msg = user !== null ? 'Your e-mail is already confirmed.' : 'Can\'t find user with given token. Your token is invalid.',
+                    const msg = user !== null ? 'Your e-mail is already confirmed.' : 'Can\'t find user with given token. Your token is invalid.',
                         err = {code: 'internal', msg: msg};
 
                     return Promise.reject(err);
@@ -107,7 +109,7 @@ exports.signUpConfirmation = function (request, reply) {
             return Promise.reject(err.code === 'internal' ? err : {code: 'default-error', msg: err});
         });
     }).catch(function(err) {
-        var Boom = require('boom');
+        const Boom = require('boom');
         if(err.code === undefined) {
             err = {code : 'default-error', msg: err};
         }

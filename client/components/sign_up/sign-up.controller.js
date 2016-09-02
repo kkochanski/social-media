@@ -7,7 +7,7 @@ angular
 signUpController.$inject = ['underscore', 'signUpService', 'config'];
 
 function signUpController(_, signUpService, config) {
-    var vm = this;
+    const vm = this;
 
     vm.submitSignUp = submitSignUp;
     vm.showSignUpForm = false;

@@ -7,7 +7,7 @@ angular
 signUpController.$inject = ['config', 'signUpConfirmationService', '$state'];
 
 function signUpController(config, signUpConfirmationService, $state) {
-    var vm = this,
+    const vm = this,
         token = $state.params.token,
         $signUpConfirmation = angular.element('#sign-up-confirmation');
 

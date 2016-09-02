@@ -1,25 +1,27 @@
 'use strict';
 
 
-const Hapi = require('hapi');
-const Confidence = require('confidence');
-const Nodemailer = require('nodemailer');
-const Bottle = require('bottlejs');
-const Promise = require('bluebird');
+const Hapi = require('hapi'),
+    Confidence = require('confidence'),
+    Nodemailer = require('nodemailer'),
+    Bottle = require('bottlejs'),
+    Promise = require('bluebird'),
+    configLoader = new Confidence.Store()
+    ;
 
-var configLoader = new Confidence.Store();
 configLoader.load(require('./config/config.json'));
 
-const server = new Hapi.Server();
-server.connection({
-    host: 'localhost',
-    port: 8000,
-    routes: {
-        cors: true
-    }
-});
+const server = new Hapi.Server(),
+    serverOptions = {
+        host: 'localhost',
+        port: 8000,
+        routes: {
+            cors: true
+        }
+    };
+server.connection(serverOptions);
 
-var dependencyInjection = new Bottle();
+const dependencyInjection = new Bottle();
 dependencyInjection.service('mailTransporter', function(){ return Nodemailer.createTransport(configLoader.get('/email/mailer')) });
 dependencyInjection.service('configLoader', function(){ return configLoader });
 dependencyInjection.service('logger', function(){
@@ -32,7 +34,7 @@ dependencyInjection.service('logger', function(){
     });
 });
 dependencyInjection.service('mongoose', function(){
-    var mongoose = require('mongoose');
+    const mongoose = require('mongoose');
     mongoose.Promise = Promise;
 
     return mongoose.connect(configLoader.get('/db/dev')).then(function() {
@@ -49,20 +51,19 @@ function registerMongooseModel(container, modelName) {
     });
 }
 dependencyInjection.factory('conversationModel', function(container){
-    return registerMongooseModel(container, 'conversation');
+    return registerMongooseModel(container, 'conversationModel');
 });
 dependencyInjection.factory('groupModel', function(container){
-    return registerMongooseModel(container, 'group');
+    return registerMongooseModel(container, 'groupModel');
 });
 dependencyInjection.factory('postModel', function(container){
-    return registerMongooseModel(container, 'post');
+    return registerMongooseModel(container, 'postModel');
 });
 dependencyInjection.factory('userModel', function(container){
-    return registerMongooseModel(container, 'user');
+    return registerMongooseModel(container, 'userModel');
 });
 server.app.di = dependencyInjection;
-server.app.serverUrl = 'http://localhost:8000';
-
+server.app.serverUrl = `http://${serverOptions.host}:${serverOptions.port}`;
 server.register(require('hapi-auth-jwt2'), function (err) {
 
     if(err){
