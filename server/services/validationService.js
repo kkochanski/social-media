@@ -2,7 +2,7 @@
 
 module.exports = {
     basicValidationOptions: {abortEarly: false},
-    validate: (data, schema, options) => {
+    validate(data, schema, options) {
         var Joi = require('joi'),
             Boom = require('boom'),
             _ = require('underscore'),
