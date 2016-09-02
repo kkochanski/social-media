@@ -22,9 +22,9 @@ const server = new Hapi.Server(),
 server.connection(serverOptions);
 
 const dependencyInjection = new Bottle();
-dependencyInjection.service('mailTransporter', function(){ return Nodemailer.createTransport(configLoader.get('/email/mailer')) });
-dependencyInjection.service('configLoader', function(){ return configLoader });
-dependencyInjection.service('logger', function(){
+dependencyInjection.service('mailTransporter',() => { Nodemailer.createTransport(configLoader.get('/email/mailer')) });
+dependencyInjection.service('configLoader', () => { configLoader });
+dependencyInjection.service('logger', () => {
     var winston = require('winston');
     return new(winston.Logger)({
         transports: [
@@ -33,38 +33,38 @@ dependencyInjection.service('logger', function(){
         ]
     });
 });
-dependencyInjection.service('mongoose', function(){
+dependencyInjection.service('mongoose', () => {
     const mongoose = require('mongoose');
     mongoose.Promise = Promise;
 
-    return mongoose.connect(configLoader.get('/db/dev')).then(function() {
+    return mongoose.connect(configLoader.get('/db/dev')).then(() => {
         return Promise.resolve(mongoose);
-    }).catch(function(err) {
+    }).catch(err => {
         return Promise.reject(err);
     });
 });
 function registerMongooseModel(container, modelName) {
-    return container.mongoose.then(function(mongoose) {
+    return container.mongoose.then(mongoose => {
         return Promise.resolve(mongoose.model(modelName, require('./db/models/' + modelName + '.js')));
-    }).catch(function(err){
+    }).catch(err => {
         return Promise.reject(err);
     });
 }
-dependencyInjection.factory('conversationModel', function(container){
+dependencyInjection.factory('conversationModel', container => {
     return registerMongooseModel(container, 'conversationModel');
 });
-dependencyInjection.factory('groupModel', function(container){
+dependencyInjection.factory('groupModel', container => {
     return registerMongooseModel(container, 'groupModel');
 });
-dependencyInjection.factory('postModel', function(container){
+dependencyInjection.factory('postModel', container => {
     return registerMongooseModel(container, 'postModel');
 });
-dependencyInjection.factory('userModel', function(container){
+dependencyInjection.factory('userModel', container => {
     return registerMongooseModel(container, 'userModel');
 });
 server.app.di = dependencyInjection;
 server.app.serverUrl = `http://${serverOptions.host}:${serverOptions.port}`;
-server.register(require('hapi-auth-jwt2'), function (err) {
+server.register(require('hapi-auth-jwt2'), err => {
 
     if(err){
         console.log(err);
@@ -72,7 +72,7 @@ server.register(require('hapi-auth-jwt2'), function (err) {
 
     server.auth.strategy('jwt', 'jwt',
         { key: 'NeverShareYourSecret',
-            validateFunc: function (decoded, request, callback) {
+            validateFunc: (decoded, request, callback) => {
 
                 // var models = request.server.plugins['hapi-sequelize'].db.sequelize.models;
 
@@ -118,11 +118,11 @@ server.register(
             register: require('hapi-authorization'),
             options: {}
         }
-    ], function(err) {
+    ], (err) => {
         if (err) {
             console.error(err);
         } else {
-            server.start(function () {
+            server.start(() => {
                 console.info('Server started at ' + server.info.uri);
             });
         }

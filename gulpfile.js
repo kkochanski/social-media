@@ -5,7 +5,8 @@ var uglify = require('gulp-uglify');
 var inject = require('gulp-inject');
 
 var paths = {
-    allScripts: ['gulpfile.js',
+    allScripts: [
+        'gulpfile.js',
         'client/*.js',
         'client/components/**/*.js',
         'client/shared/**/*.js',
@@ -14,13 +15,13 @@ var paths = {
     ]
 };
 
-gulp.task('lint', function() {
+gulp.task('lint', () => {
     return gulp.src(paths.allScripts)
         .pipe(jshint())
         .pipe(jshint.reporter('jshint-stylish'));
 });
 
-gulp.task('index', function () {
+gulp.task('index', () => {
     var target = gulp.src('./client/index.html');
 
     var sources = gulp.src([

@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('app.services')
-    .service('arrayHelperService', function() {
+    .service('arrayHelperService', () => {
 
-        this.range = function (from, to) {
+        this.range = (from, to) => {
             var array=[];
             while(from--) {
                 array[from]=from+to;

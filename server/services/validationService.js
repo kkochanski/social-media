@@ -2,7 +2,7 @@
 
 module.exports = {
     basicValidationOptions: {abortEarly: false},
-    validate: function(data, schema, options) {
+    validate: (data, schema, options) => {
         var Joi = require('joi'),
             Boom = require('boom'),
             _ = require('underscore'),
@@ -13,7 +13,7 @@ module.exports = {
 
         var validation = Joi.validate(data, schema, options);
         if(validation.error) {
-            validation.error.details.forEach(function(element) {
+            validation.error.details.forEach(element => {
                 errorsWithMessages[element.path] = element.message;
             });
             toReturn = Boom.badData('Validation failure');

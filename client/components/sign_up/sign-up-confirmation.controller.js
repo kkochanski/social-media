@@ -11,14 +11,14 @@ function signUpController(config, signUpConfirmationService, $state) {
         token = $state.params.token,
         $signUpConfirmation = angular.element('#sign-up-confirmation');
 
-    angular.element(document).ready(function () {
+    angular.element(document).ready(() => {
         signUpConfirmationService
             .confirm(token)
-            .then(function(data) {
+            .then(data => {
                 $signUpConfirmation.find('div.positive.message').show().find('p').text('You have successfully confirmed your e-mail address (' + data.email + ')');
-            }).catch(function(response) {
+            }).catch(response => {
                 $signUpConfirmation.find('div.negative.message').show().find('p').text(response.data !== null ? response.data.message : config.errorsMessages.internalError);
-            }).then(function() {
+            }).then(() => {
                 $signUpConfirmation.find('div.icon.message').remove();
         });
     });
