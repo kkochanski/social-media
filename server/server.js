@@ -64,33 +64,12 @@ dependencyInjection.factory('userModel', container => {
 });
 server.app.di = dependencyInjection;
 server.app.serverUrl = `http://${serverOptions.host}:${serverOptions.port}`;
-server.register(require('hapi-auth-jwt2'), err => {
-
-    if(err){
-        console.log(err);
-    }
-
-    server.auth.strategy('jwt', 'jwt',
-        { key: 'NeverShareYourSecret',
-            validateFunc: (decoded, request, callback) => {
-
-                // var models = request.server.plugins['hapi-sequelize'].db.sequelize.models;
-
-                // if (0) {
-                    return callback(null, false);
-                // }
-                // else {
-                //     return callback(null, false, {role: 'EMPLOYEE'});
-                // }
-            },
-            verifyOptions: { algorithms: [ 'HS256' ] }
-        });
-
-    server.auth.default('jwt');
-});
 
 server.register(
     [
+        {
+            register: require('hapi-auth-jwt2')
+        },
         {
             register: require('good'),
             options: {
@@ -108,24 +87,50 @@ server.register(
                 }
             }
         },
-        {
-            register: require('hapi-router'),
-            options: {
-                routes: 'config/routes/**/*.js'
-            }
-        },
-        {
-            register: require('hapi-authorization'),
-            options: {}
-        }
+        // {
+        //     register: require('hapi-authorization'),
+        //     options: {}
+        // }
     ], (err) => {
         if (err) {
             console.error(err);
         } else {
+            server.auth.strategy('jwt', 'jwt', {
+                key: 'VZ3byyKYuDvZv6tWR9b2p6sAFVdF4LgASzv8t5zbCCX7PLSB',
+                validateFunc(decoded, request, callback) {
+
+                    console.log(decoded);
+                    console.log(request.auth.token);
+                    return callback(null, false);
+
+                    // if (0) {
+                    //     return callback(null, false);
+                    // }
+                    // else {
+                    // return callback(null, false, {role: 'EMPLOYEE'});
+                    // }
+                },
+                verifyOptions: {
+                    algorithms: [ 'HS256' ],
+                    ignoreExpiration: false
+                }
+            });
+
+            server.auth.default('jwt');
+
+            server.register({
+                register: require('hapi-router'),
+                options: {
+                    routes: 'config/routes/**/*.js'
+                }
+            }, err => {
+                if (err) throw err;
+            });
+
             server.start(() => {
                 console.info('Server started at ' + server.info.uri);
             });
         }
     }
-    
+
 );
