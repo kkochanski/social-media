@@ -19,5 +19,8 @@
         "config": {
             "from": ""
         }
+    },
+    "token": {
+        "key" : ""
     }
 }

@@ -23,5 +23,5 @@ module.exports = new Schema({
         }
     ],
     numberOfFriends: Number
-});
+}, { collection: 'users' });
 

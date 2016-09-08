@@ -1,13 +1,12 @@
-const Joi = require('joi');
-
 module.exports = [
     {
         path: '/',
         method: 'GET',
         handler: require('../../../controllers/indexController'),
-        config: { 
+        config: {
             auth: false
         }
-        //  config: { auth: 'jwt', plugins: {'hapiAuthorization': {roles: ['EMPLOYEE']}} } // 
+        //  config: { auth: 'jwt', plugins: {'hapiAuthorization': {roles: ['EMPLOYEE']}} } //
+        // config: { auth: 'jwt' }
     }
 ];

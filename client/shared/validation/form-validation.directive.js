@@ -15,16 +15,16 @@ function formValidation(_, sugar) {
             'errors': '=',
             'formElement': '@'
         },
-        link: ($scope, element, attr) => {
+        link($scope, element, attr) {
             var $form = angular.element(attr.formElement)
                 ;
 
-            $form.find('input').on('focusout', () => {
+            $form.find('input').on('focusout', function() {
                 var $field = $(this).closest('.field');
                 $field.removeClass('error').find('p.error-message').remove();
             });
 
-            $scope.$watch('errors', validationErrors => {
+            $scope.$watch('errors', function(validationErrors) {
                 if(!_.isEmpty(validationErrors)) {
                     for(var field in validationErrors) {
                         var formattedFieldName = sugar.String(field).spacify().capitalize(),

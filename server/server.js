@@ -22,9 +22,9 @@ const server = new Hapi.Server(),
 server.connection(serverOptions);
 
 const dependencyInjection = new Bottle();
-dependencyInjection.service('mailTransporter',() => { Nodemailer.createTransport(configLoader.get('/email/mailer')) });
-dependencyInjection.service('configLoader', () => { configLoader });
-dependencyInjection.service('logger', () => {
+dependencyInjection.service('mailTransporter', function() { return Nodemailer.createTransport(configLoader.get('/email/mailer')) });
+dependencyInjection.service('configLoader', function() { return configLoader });
+dependencyInjection.service('logger', function() {
     var winston = require('winston');
     return new(winston.Logger)({
         transports: [
@@ -33,7 +33,7 @@ dependencyInjection.service('logger', () => {
         ]
     });
 });
-dependencyInjection.service('mongoose', () => {
+dependencyInjection.service('mongoose', function() {
     const mongoose = require('mongoose');
     mongoose.Promise = Promise;
 
@@ -50,16 +50,16 @@ function registerMongooseModel(container, modelName) {
         return Promise.reject(err);
     });
 }
-dependencyInjection.factory('conversationModel', container => {
+dependencyInjection.factory('conversationModel', function(container) {
     return registerMongooseModel(container, 'conversationModel');
 });
-dependencyInjection.factory('groupModel', container => {
+dependencyInjection.factory('groupModel', function(container) {
     return registerMongooseModel(container, 'groupModel');
 });
-dependencyInjection.factory('postModel', container => {
+dependencyInjection.factory('postModel', function(container) {
     return registerMongooseModel(container, 'postModel');
 });
-dependencyInjection.factory('userModel', container => {
+dependencyInjection.factory('userModel', function(container) {
     return registerMongooseModel(container, 'userModel');
 });
 server.app.di = dependencyInjection;
@@ -96,7 +96,7 @@ server.register(
             console.error(err);
         } else {
             server.auth.strategy('jwt', 'jwt', {
-                key: 'VZ3byyKYuDvZv6tWR9b2p6sAFVdF4LgASzv8t5zbCCX7PLSB',
+                key: configLoader.get('/token/key'),
                 validateFunc(decoded, request, callback) {
 
                     console.log(decoded);
