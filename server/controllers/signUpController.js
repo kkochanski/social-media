@@ -1,5 +1,11 @@
 'use strict';
 
+const Promise = require('bluebird'),
+    Boom = require('boom'),
+    _ = require('underscore'),
+    bcrypt = require('bcrypt')
+    ;
+
 /**
  * Simple sign up action
  *
@@ -9,10 +15,7 @@
  */
 exports.signUp = (request, reply) => {
     const userValidationSchema = require('./../db/validation_schemas/userValidationSchema.js'),
-        validation = require('../services/validationService'),
-        Promise = require('bluebird'),
-        _ = require('underscore'),
-        bcrypt = require('bcrypt');
+        validation = require('../services/validationService');
 
 
     new Promise((resolve, reject) => {
@@ -24,36 +27,42 @@ exports.signUp = (request, reply) => {
         }
     }).then(response => {
         return request.server.app.di.container.userModel.then(userModel => {
-            let toSave = _.clone(request.payload);
-            toSave.confirmationToken = require('crypto').randomBytes(28).toString('hex');
-            toSave.password = bcrypt.hashSync(toSave.password, 10);
-            const user = new userModel(toSave);
+            return userModel.findOne({email: request.payload.email }).then(user => {
+                if(user !== null) {
+                    return Promise.reject(Boom.notAcceptable('Your e-mail is already in used. Please choose another one or retrieve password to your account.'))
+                } else {
+                    return Promise.resolve();
+                }
+            }).then(() => {
+                let toSave = _.clone(request.payload);
+                toSave.confirmationToken = require('crypto').randomBytes(28).toString('hex');
+                toSave.password = bcrypt.hashSync(toSave.password, 10);
+                const user = new userModel(toSave);
 
-            return user.save().then(createdUser => {
-                const confirmationUrl = request.server.app.serverUrl + '/sign-up/confirmation/' + user.confirmationToken,
-                    mailOptions = {
-                        from: request.server.app.di.container.configLoader.get('/email/config/from'),
-                        to: createdUser.email,
-                        subject: 'Account registration',
-                        html: '<h3>Hello ' + createdUser.firstName + '</h3> <div>Thank you for your registration. To end up your sign up process, please confirm your e-mail address by click this url: <a href="' + confirmationUrl + '/' + '">Confirmation URL</a> </div>'
-                    };
+                return user.save().then(createdUser => {
+                    const confirmationUrl = request.server.app.serverUrl + '/sign-up/confirmation/' + user.confirmationToken,
+                        mailOptions = {
+                            from: request.server.app.di.container.configLoader.get('/email/config/from'),
+                            to: createdUser.email,
+                            subject: 'Account registration',
+                            html: '<h3>Hello ' + createdUser.firstName + '</h3> <div>Thank you for your registration. To end up your sign up process, please confirm your e-mail address by click this url: <a href="' + confirmationUrl + '/' + '">Confirmation URL</a> </div>'
+                        };
 
-                return request.server.app.di.container.mailTransporter.sendMail(mailOptions).catch(err => {
-                    userModel.remove({'_id': user['_id']}, (dbErr) => { /* Remove already created user. Callback is needed, without that, removal won't work. */
-                        if(dbErr) {
-                            console.log('Error while removing user on send mail fail: ' + dbErr);
-                        }
+                    return request.server.app.di.container.mailTransporter.sendMail(mailOptions).catch(err => {
+                        userModel.remove({'_id': user['_id']}, (dbErr) => { /* Remove already created user. Callback is needed, without that, removal won't work. */
+                            if(dbErr) {
+                                console.log('Error while removing user on send mail fail: ' + dbErr);
+                            }
+                        });
+                        return Promise.reject(err);
                     });
-                    return Promise.reject(err);
-                });
+                })
             })
         });
     }).catch(error => {
         if(typeof error === 'object' && error.isBoom) {
             return error;
         }
-
-        const Boom = require('boom');
         request.server.app.di.container.logger.error('Error in \'signUp\' action, in ' + __filename, error);
 
         return Boom.notAcceptable('Unexpected error occurred. Please try again or contact with admin.');
@@ -76,18 +85,16 @@ exports.signUp = (request, reply) => {
  */
 exports.signUpConfirmation = (request, reply) => {
 
-    const userModel = request.server.app.di.container.userModel,
-        Promise = require('bluebird'),
-        Boom = require('boom');
+    const userModel = request.server.app.di.container.userModel;
 
     userModel.then(userModel => {
         return userModel.findOne({'confirmationToken': request.payload.token, 'confirmedAt': null}).then(user => {
             if(user === null) {
-                return userModel.findOne({'confirmationToken': request.payload.token}).then(function(user) {
+                return userModel.findOne({'confirmationToken': request.payload.token}).then(user => {
                     if(user !== null) {
-                        return Boom.notAcceptable('Your e-mail is already confirmed.')
+                        return Promise.reject(Boom.notAcceptable('Your e-mail is already confirmed.'));
                     } else {
-                        return Boom.notAcceptable('Can\'t find user with given token. Your token is invalid..')
+                        return Promise.reject(Boom.notAcceptable('Can\'t find user with given token. Your token is invalid..'));
                     }
                 })
             }
