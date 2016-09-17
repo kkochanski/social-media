@@ -60,14 +60,14 @@ exports.signUp = (request, reply) => {
             })
         });
     }).catch(error => {
-        if(typeof error === 'object' && error.isBoom) {
+        if(error.isBoom) {
             return error;
         }
         request.server.app.di.container.logger.error('Error in \'signUp\' action, in ' + __filename, error);
 
         return Boom.notAcceptable('Unexpected error occurred. Please try again or contact with admin.');
     }).then(response => {
-        if(response === undefined) {
+        if(!response.isBoom) {
             response = request.payload;
             response.password = undefined;
         }
