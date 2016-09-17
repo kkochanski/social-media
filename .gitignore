@@ -4,4 +4,6 @@ node_modules
 .npm
 
 /server/config/config.json
-/server/config/database.json
+/server/config/config_dev.json
+/server/config/config_test.json
+/server/config/config_prod.json

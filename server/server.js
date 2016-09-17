@@ -1,24 +1,34 @@
 'use strict';
 
+const chalk = require('chalk');
+
+process.env.NODE_ENV = process.env.NODE_ENV || 'dev';
+
+console.log(chalk.grey.bgYellow('Running server in ' + process.env.NODE_ENV + ' environment'));
 
 const Hapi = require('hapi'),
     Confidence = require('confidence'),
     Nodemailer = require('nodemailer'),
     Bottle = require('bottlejs'),
     Promise = require('bluebird'),
-    configLoader = new Confidence.Store()
+    configLoader = new Confidence.Store();
     ;
 
-configLoader.load(require('./config/config.json'));
+const basicConfig = require('./config/config.json'),
+    envConfig = require('./config/config_' + process.env.NODE_ENV + '.json'),
+    mergedConfig = Object.assign(basicConfig, envConfig);
+
+
+configLoader.load(mergedConfig);
 
 const server = new Hapi.Server(),
-    serverOptions = {
-        host: 'localhost',
-        port: 8000,
+    configServerOptions = configLoader.get('/serverOptions'),
+    notConfigServerOptions = {
         routes: {
             cors: true
         }
-    };
+    },
+    serverOptions = Object.assign(configServerOptions, notConfigServerOptions);
 server.connection(serverOptions);
 
 const dependencyInjection = new Bottle();
@@ -37,7 +47,7 @@ dependencyInjection.service('mongoose', function() {
     const mongoose = require('mongoose');
     mongoose.Promise = Promise;
 
-    return mongoose.connect(configLoader.get('/db/dev')).then(() => {
+    return mongoose.connect(configLoader.get('/db/connection_string')).then(() => {
         return Promise.resolve(mongoose);
     }).catch(err => {
         return Promise.reject(err);
