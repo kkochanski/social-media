@@ -40,9 +40,10 @@ exports.signUp = (request, reply) => {
                 const user = new userModel(toSave);
 
                 return user.save().then(createdUser => {
-                    const confirmationUrl = request.server.app.serverUrl + '/sign-up/confirmation/' + user.confirmationToken,
+                    const configClientOptions = request.server.app.di.container.config.clientOptions;
+                    const confirmationUrl = configClientOptions.host + ':' + configClientOptions.port + '/sign-up/confirmation/' + user.confirmationToken,
                         mailOptions = {
-                            from: request.server.app.di.container.configLoader.get('/email/config/from'),
+                            from: request.server.app.di.container.config.email.config.from,
                             to: createdUser.email,
                             subject: 'Account registration',
                             html: '<h3>Hello ' + createdUser.firstName + '</h3> <div>Thank you for your registration. To end up your sign up process, please confirm your e-mail address by click this url: <a href="' + confirmationUrl + '/' + '">Confirmation URL</a> </div>'

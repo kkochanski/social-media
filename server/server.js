@@ -7,22 +7,18 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'dev';
 console.log(chalk.grey.bgYellow('Running server in ' + process.env.NODE_ENV + ' environment'));
 
 const Hapi = require('hapi'),
-    Confidence = require('confidence'),
     Nodemailer = require('nodemailer'),
     Bottle = require('bottlejs'),
-    Promise = require('bluebird'),
-    configLoader = new Confidence.Store();
+    Promise = require('bluebird')
     ;
 
 const basicConfig = require('./config/config.json'),
     envConfig = require('./config/config_' + process.env.NODE_ENV + '.json'),
-    mergedConfig = Object.assign(basicConfig, envConfig);
+    config = Object.assign(basicConfig, envConfig);
 
-
-configLoader.load(mergedConfig);
 
 const server = new Hapi.Server(),
-    configServerOptions = configLoader.get('/serverOptions'),
+    configServerOptions = config.serverOptions,
     notConfigServerOptions = {
         routes: {
             cors: true
@@ -32,8 +28,8 @@ const server = new Hapi.Server(),
 server.connection(serverOptions);
 
 const dependencyInjection = new Bottle();
-dependencyInjection.service('mailTransporter', function() { return Nodemailer.createTransport(configLoader.get('/email/mailer')) });
-dependencyInjection.service('configLoader', function() { return configLoader });
+dependencyInjection.service('mailTransporter', function() { return Nodemailer.createTransport(config.email.mailer) });
+dependencyInjection.service('config', function() { return config });
 dependencyInjection.service('logger', function() {
     var winston = require('winston');
     return new(winston.Logger)({
@@ -47,7 +43,7 @@ dependencyInjection.service('mongoose', function() {
     const mongoose = require('mongoose');
     mongoose.Promise = Promise;
 
-    return mongoose.connect(configLoader.get('/db/connection_string')).then(() => {
+    return mongoose.connect(config.db.connectionString).then(() => {
         return Promise.resolve(mongoose);
     }).catch(err => {
         return Promise.reject(err);
@@ -106,7 +102,7 @@ server.register(
             console.error(err);
         } else {
             server.auth.strategy('jwt', 'jwt', {
-                key: configLoader.get('/token/key'),
+                key: config.token.key,
                 validateFunc(decoded, request, callback) {
 
                     console.log(decoded);

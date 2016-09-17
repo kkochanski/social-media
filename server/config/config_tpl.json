@@ -1,6 +1,6 @@
 {
     "db": {
-        "connection_string": "mongodb://localhost:27017/"
+        "connectionString": "mongodb://localhost:27017/"
     },
     "email": {
         "mailer": {
@@ -17,5 +17,13 @@
     },
     "token": {
         "key" : ""
+    },
+    "serverOptions": {
+        "host": "",
+        "port": 80
+    },
+    "clientOptions": {
+        "host": "",
+        "port": 80
     }
 }
