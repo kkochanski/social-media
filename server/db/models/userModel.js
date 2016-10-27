@@ -9,8 +9,6 @@ module.exports = new Schema({
     email:   String,
     password:   String,
     profileImage: String,
-    createdAt:   { type: Date, default: Date.now },
-    updatedAt:   { type: Date, default: Date.now },
     deletedAt:   Date,
     confirmedAt:   { type: Date, default: null },
     confirmationToken:   String,
@@ -23,5 +21,5 @@ module.exports = new Schema({
         }
     ],
     numberOfFriends: Number
-}, { collection: 'users' });
+}, { collection: 'users', timestamps: {} });
 

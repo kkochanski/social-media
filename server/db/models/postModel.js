@@ -5,14 +5,6 @@ var mongoose = require('mongoose'),
 
 module.exports = new Schema({
     content: String,
-    createdAt: {
-        type: Date,
-        default: Date.now
-    },
-    updatedAt: {
-        type: Date,
-        default: Date.now
-    },
     deletedAt: Date,
     possession: {
         type: String,
@@ -49,5 +41,5 @@ module.exports = new Schema({
         }
     ],
     images: [String]
-});
+}, { timestamps: {} });
 

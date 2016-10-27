@@ -41,7 +41,7 @@ exports.signUp = (request, reply) => {
 
                 return user.save().then(createdUser => {
                     const configClientOptions = request.server.app.di.container.config.clientOptions;
-                    const confirmationUrl = configClientOptions.host + ':' + configClientOptions.port + '/sign-up/confirmation/' + user.confirmationToken,
+                    const confirmationUrl = configClientOptions.url + '/sign-up/confirmation/' + user.confirmationToken,
                         mailOptions = {
                             from: request.server.app.di.container.config.email.config.from,
                             to: createdUser.email,
@@ -49,7 +49,11 @@ exports.signUp = (request, reply) => {
                             html: '<h3>Hello ' + createdUser.firstName + '</h3> <div>Thank you for your registration. To end up your sign up process, please confirm your e-mail address by click this url: <a href="' + confirmationUrl + '/' + '">Confirmation URL</a> </div>'
                         };
 
-                    return request.server.app.di.container.mailTransporter.sendMail(mailOptions).catch(err => {
+                    return request.server.app.di.container.mailTransporter.sendMail(mailOptions).then(() => {
+                        let response = request.payload;
+                        response.password = undefined;
+                        return Promise.resolve(response)
+                    }).catch(err => {
                         userModel.remove({'_id': user['_id']}, (dbErr) => { /* Remove already created user. Callback is needed, without that, removal won't work. */
                             if(dbErr) {
                                 console.log('Error while removing user on send mail fail: ' + dbErr);
@@ -68,11 +72,6 @@ exports.signUp = (request, reply) => {
 
         return Boom.notAcceptable('Unexpected error occurred. Please try again or contact with admin.');
     }).then(response => {
-        if(!response.isBoom) {
-            response = request.payload;
-            response.password = undefined;
-        }
-
         return reply(response);
     });
 };

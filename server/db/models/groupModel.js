@@ -25,20 +25,12 @@ module.exports = new Schema({
     name: String,
     description: String,
     icon: String,
-    createdAt: {
-        type: Date,
-        default: Date.now
-    },
     createdBy: {
         userId: Schema.Types.ObjectId,
         firstName: String,
         lastNAme: String,
         profileImage: String
     },
-    updatedAt: {
-        type: Date,
-        default: Date.now
-    },
     deletedAt: Date
-});
+}, { timestamps: {} });
 

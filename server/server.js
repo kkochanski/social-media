@@ -12,10 +12,9 @@ const Hapi = require('hapi'),
     Promise = require('bluebird')
     ;
 
-const basicConfig = require('./config/config.json'),
-    envConfig = require('./config/config_' + process.env.NODE_ENV + '.json'),
-    config = Object.assign(basicConfig, envConfig);
-
+const basicConfig = require('./config/config.js'),
+    envConfig = require('./config/config_' + process.env.NODE_ENV + '.js'),
+    config = require('./services/configTransformer')(Object.assign(basicConfig, envConfig));
 
 const server = new Hapi.Server(),
     configServerOptions = config.serverOptions,
@@ -67,6 +66,9 @@ dependencyInjection.factory('postModel', function(container) {
 });
 dependencyInjection.factory('userModel', function(container) {
     return registerMongooseModel(container, 'userModel');
+});
+dependencyInjection.factory('tokenModel', function(container) {
+    return registerMongooseModel(container, 'tokenModel');
 });
 server.app.di = dependencyInjection;
 server.app.serverUrl = `http://${serverOptions.host}:${serverOptions.port}`;

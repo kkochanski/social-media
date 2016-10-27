@@ -3,7 +3,7 @@ node_modules
 .idea/
 .npm
 
-/server/config/config.json
-/server/config/config_dev.json
-/server/config/config_test.json
-/server/config/config_prod.json
+/server/config/config.js
+/server/config/config_dev.js
+/server/config/config_test.js
+/server/config/config_prod.js
